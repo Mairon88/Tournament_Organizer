@@ -1,0 +1,51 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TORG - {% block title %}{% endblock %}</title>
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
+
+</head>
+<body>
+    <div id="header">
+        <span class="logo">TOURNAMENT ORGANIZER</span>
+        {% if request.user.is_authenticated %}
+            <ul class="menu">
+                <li>
+                    <a href="{% url 'dashboard' %}">Panel główny</a>
+                </li>
+                <li>
+                    <a href="#">Trwające turnieje</a>
+                </li>
+                <li>
+                    <a href="#">Zakończone turnieje</a>
+                </li>
+                <li>
+                    <a href="#">Statystyki</a>
+                </li>
+                <li>
+                    <a href="#">Profil</a>
+                </li>
+            </ul>
+        {% endif %}
+        <span class="user">
+            {% if request.user.is_authenticated %}
+                Witaj, {{ request.user.first_name }}!
+                <a href ="{% url 'logout' %}">Wyloguj</a>
+            {% else %}
+                <a href="{% url 'login' %}">Zaloguj</a>
+            {% endif %}
+        </span>
+    </div>
+    <div id="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+</body>
+</html>
