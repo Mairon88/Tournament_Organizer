@@ -7,12 +7,12 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)
 
 class UserRegistrationForm(forms.ModelForm):
-    password = forms.CharField(folabel='Hasło', widget=forms.PasswordInput)
+    password = forms.CharField(label='Hasło', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Powtórz hasło', widget=forms.PasswordInput)
 
     class Meta:
         model = User
-        fields = ('username', 'firstname', 'email')
+        fields = ('username', 'first_name', 'email')
 
         def clean_password2(self):
             cd = self.cleaned_data
