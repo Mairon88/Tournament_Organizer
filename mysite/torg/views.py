@@ -71,9 +71,9 @@ def create_tournaments(request):
                   'account/create_tournaments.html')
 
 @login_required
-def existing_tournaments(request):
+def ongoing_tournaments(request):
     return render(request,
-                  'account/existing_tournaments.html')
+                  'account/ongoing_tournaments.html')
 
 @login_required
 def completed_tournaments(request):

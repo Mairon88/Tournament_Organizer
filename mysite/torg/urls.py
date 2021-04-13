@@ -16,6 +16,6 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('edit/', views.edit, name='edit'),
     path('create_tournaments/', views.create_tournaments, name='create_tournaments'),
-    path('existing_tournaments/', views.existing_tournaments, name='existing_tournaments'),
+    path('ongoing_tournaments/', views.ongoing_tournaments, name='ongoing_tournaments'),
     path('completed_tournaments/', views.completed_tournaments, name='completed_tournaments'),
 ]
