@@ -14,4 +14,8 @@ urlpatterns = [
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset/done/,', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('register/', views.register, name='register'),
+    path('edit/', views.edit, name='edit'),
+    path('create_tournaments/', views.create_tournaments, name='create_tournaments'),
+    path('existing_tournaments/', views.existing_tournaments, name='existing_tournaments'),
+    path('completed_tournaments/', views.completed_tournaments, name='completed_tournaments'),
 ]
