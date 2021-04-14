@@ -4,5 +4,10 @@
 
 {% block content %}
     <h1>Lista zakończonych turniejów</h1>
-    <p> TUTAJ BĘDZIE LISTA ZAKOŃCZONYCH TURNIEJÓW</p>
+    {% for tournament in tournaments %}
+            <p>Nazwa turnieju: {{ tournament.name }}</p>
+            <p>Data zakończenia: {{ tournament.end_date }}</p>
+            <p>Dodany przez: {{ tournament.author }}</p>
+            <hr>
+    {% endfor %}
 {% endblock %}

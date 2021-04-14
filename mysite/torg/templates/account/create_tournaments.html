@@ -5,4 +5,10 @@
 {% block content %}
     <h1>Stwórz nowy turniej</h1>
     <p> TUTAJ BĘDZIE FORMULARZ DO UTWORZENIA TURNIEJU</p>
+    <form action="." method="post">
+        {{ tournament_form.as_p }}
+        {% csrf_token %}
+        <p><input type="submit" value="Zapisz turniej"></p>
+        {{ message }}
+    </form>
 {% endblock %}

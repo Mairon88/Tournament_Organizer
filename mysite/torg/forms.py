@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, Tournament
 
 
 class LoginForm(forms.Form):
@@ -30,4 +30,12 @@ class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('description','photo')
+
+class TournamentRegistrationForm(forms.ModelForm):
+    author = forms.CharField(widget=forms.HiddenInput(), initial=123)
+    class Meta:
+        model = Tournament
+        fields = ('author', 'name', 'description')
+        exclude = ['author']
+
 

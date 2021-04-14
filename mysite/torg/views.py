@@ -1,10 +1,12 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
-from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
+from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm, TournamentRegistrationForm
 from django.contrib.auth.decorators import login_required
-from .models import Profile
-
+from .models import Profile, Tournament
+from django.contrib.auth import get_user_model
+from django.db import IntegrityError
+from django.shortcuts import redirect
 
 def user_login(request):
     if request.method == 'POST':
@@ -67,15 +69,42 @@ def edit(request):
 
 @login_required
 def create_tournaments(request):
+    if request.method == 'POST':
+        users = get_user_model()
+        obj = users.objects.get(id=request.user.id)
+        print(obj)
+        tournament_form = TournamentRegistrationForm(initial={'author':obj}, data=request.POST)
+        if tournament_form.is_valid():
+            new_tournament = tournament_form.save(commit=False)
+            new_tournament.author = obj
+            try:
+                new_tournament.save()
+
+            except IntegrityError:
+                message = "Turniej o podanej nazwie już istnieje, proszę zmień nazwę dla nowego turnieju"
+                return render(request,
+                              'account/create_tournaments.html',
+                                          {'tournament_form': tournament_form,
+                                          "message": message})
+
+            return redirect('/account/ongoing_tournaments/')
+    else:
+        tournament_form = TournamentRegistrationForm()
+
     return render(request,
-                  'account/create_tournaments.html')
+                  'account/create_tournaments.html',
+                  {'tournament_form': tournament_form})
 
 @login_required
 def ongoing_tournaments(request):
+    tournaments = Tournament.status_ongoing.all()
     return render(request,
-                  'account/ongoing_tournaments.html')
+                  'account/ongoing_tournaments.html',
+                  {'tournaments':tournaments})
 
 @login_required
 def completed_tournaments(request):
+    tournaments = Tournament.status_completed.all()
     return render(request,
-                  'account/completed_tournaments.html')
+                  'account/completed_tournaments.html',
+                  {'tournaments':tournaments})

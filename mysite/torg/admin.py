@@ -8,7 +8,7 @@ class ProfileAdmin(admin.ModelAdmin):
 
 @admin.register(Tournament)
 class TournamentAdmin(admin.ModelAdmin):
-    list_display = ['author', 'name', 'description', 'slug', 'created']
+    list_display = ['name','author', 'description', 'slug', 'created', 'end_date']
 
 @admin.register(PlayerTeam)
 class PlayerTeamAdmin(admin.ModelAdmin):

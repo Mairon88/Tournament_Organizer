@@ -4,5 +4,11 @@
 
 {% block content %}
     <h1>Trwające turnieje</h1>
-    <p> TUTAJ BĘDZIE LISTA TRWAJĄCYCH TURNIEJÓW</p>
+    {% for tournament in tournaments %}
+            <p>Nazwa turnieju: {{ tournament.name }}</p>
+            <p>Data dodania: {{ tournament.created }}</p>
+            <p>Dodany przez: {{ tournament.author }}</p>
+            <hr>
+    {% endfor %}
+
 {% endblock %}
