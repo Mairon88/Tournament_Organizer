@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm, TournamentRegistrationForm
 from django.contrib.auth.decorators import login_required
-from .models import Profile, Tournament
+from .models import Profile, Tournament, PlayerTeam
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError
 from django.shortcuts import redirect
@@ -98,11 +98,11 @@ def create_tournaments(request):
 @login_required
 def ongoing_tournaments(request):
     tournaments = Tournament.status_ongoing.filter(author = request.user)
-    # all = Tournament.objects.all()
-    # print(all)
+
     return render(request,
                   'account/ongoing_tournaments.html',
-                  {'tournaments':tournaments})
+                  {'tournaments':tournaments
+                   })
 
 
 @login_required
@@ -118,10 +118,14 @@ def tournament_detail(request, year, month, day, tournament):
                                                 created__year=year,
                                                 created__month=month,
                                                 created__day=day)
+    all_players = PlayerTeam.objects.all()
+    players = [player for player in all_players if player.tournament.name == tournament.name]
 
     return render(request,
                   'account/tournament_detail.html',
-                  {'tournament': tournament})
+                  {'tournament': tournament,
+                   'players': players,
+                   })
 
 @login_required
 def tournament_delete(request,year, month, day, tournament):

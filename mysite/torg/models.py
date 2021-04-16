@@ -62,6 +62,7 @@ class PlayerTeam(models.Model):
     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     photo = models.ImageField(upload_to='users/%Y/%m/%d', blank=True)
+    objects = models.Manager()
 
     # Powoduje, że nie można dodać gracza o tej samej nazwie do jednego turnieju
     class Meta:

@@ -11,6 +11,10 @@
         <p> Data zakończenia turnieju: {{ tournament.end_date }}</p>
     {% endif %}
     <p> Opis turnieju: {{ tournament.description }}</p>
+    <p> Gracze:</p>
+    {% for player in players %}
+        <p>{{ player.name }}</p>
+    {% endfor %}
     <hr><hr>
     <form action="delete/" method="POST">
         {% csrf_token %}
