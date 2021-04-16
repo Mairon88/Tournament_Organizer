@@ -28,7 +28,7 @@ class Tournament(models.Model):
     slug = models.SlugField(max_length=250, unique_for_date='created')
     created = models.DateTimeField(auto_now_add=True)
     end_date = models.DateTimeField(auto_now=True)
-    ongoing = models.BooleanField(default=True)
+    ongoing = models.BooleanField(default=True)  # STWORZYĆ STATUS CHOICE I WYBRAC onoing, YES/NO
     status_ongoing = OngoingManager()
     status_completed = CompletedManager()
     objects = models.Manager()

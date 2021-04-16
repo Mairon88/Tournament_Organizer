@@ -95,15 +95,15 @@ def create_tournaments(request):
                   {'tournament_form': tournament_form})
 
 
-
-
-
 @login_required
 def ongoing_tournaments(request):
     tournaments = Tournament.status_ongoing.filter(author = request.user)
+    # all = Tournament.objects.all()
+    # print(all)
     return render(request,
                   'account/ongoing_tournaments.html',
                   {'tournaments':tournaments})
+
 
 @login_required
 def completed_tournaments(request):
@@ -119,8 +119,37 @@ def tournament_detail(request, year, month, day, tournament):
                                                 created__month=month,
                                                 created__day=day)
 
-    print(tournament.author)
     return render(request,
                   'account/tournament_detail.html',
                   {'tournament': tournament})
 
+@login_required
+def tournament_delete(request,year, month, day, tournament):
+    tournament = get_object_or_404(Tournament, slug=tournament,
+                                                created__year=year,
+                                                created__month=month,
+                                                created__day=day)
+
+    if request.method == 'POST' and request.POST.get('delete'):
+        tournament.delete()
+        return redirect('/account/ongoing_tournaments/')
+
+    return render(request,
+                  'account/tournament_delete.html',
+                  {'tournament': tournament})
+
+@login_required
+def tournament_complete(request,year, month, day, tournament):
+    tournament = get_object_or_404(Tournament, slug=tournament,
+                                                created__year=year,
+                                                created__month=month,
+                                                created__day=day)
+
+    if request.method == 'POST' and request.POST.get('complete'):
+        tournament.ongoing = False
+        tournament.save()
+        return redirect('/account/completed_tournaments/')
+
+    return render(request,
+                  'account/tournament_complete.html',
+                  {'tournament': tournament})

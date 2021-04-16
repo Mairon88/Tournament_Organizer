@@ -8,10 +8,13 @@
     <p> Data utworzenia turnieju: {{ tournament.created }}</p>
     <p> Opis turnieju: {{ tournament.description }}</p>
     <hr><hr>
-
-
-
-
-
+    <form action="delete/" method="POST">
+        {% csrf_token %}
+       <p><input type="submit" value="USUŃ TURNIEJ">
+    </form>
+    <form action="complete/" method="POST">
+        {% csrf_token %}
+       <p><input type="submit" value="ZAKOŃCZ TURNIEJ">
+    </form>
 
 {% endblock %}

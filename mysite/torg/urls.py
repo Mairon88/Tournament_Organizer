@@ -21,4 +21,6 @@ urlpatterns = [
     path('ongoing_tournaments/', views.ongoing_tournaments, name='ongoing_tournaments'),
     path('completed_tournaments/', views.completed_tournaments, name='completed_tournaments'),
     path('<int:year>/<int:month>/<int:day>/<slug:tournament>/', views.tournament_detail, name='tournament_detail'),
+    path('<int:year>/<int:month>/<int:day>/<slug:tournament>/delete/', views.tournament_delete, name='tournament_delete'),
+    path('<int:year>/<int:month>/<int:day>/<slug:tournament>/complete/', views.tournament_complete, name='tournament_complete'),
 ]
