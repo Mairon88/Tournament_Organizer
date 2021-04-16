@@ -119,7 +119,8 @@ def tournament_detail(request, year, month, day, tournament):
                                                 created__month=month,
                                                 created__day=day)
     all_players = PlayerTeam.objects.all()
-    players = [player for player in all_players if player.tournament.name == tournament.name]
+    players = [player for player in all_players if (player.tournament.name == tournament.name and
+                                                    player.tournament.author == request.user)]
 
     return render(request,
                   'account/tournament_detail.html',
