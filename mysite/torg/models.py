@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.urls import reverse
 
 class OngoingManager(models.Manager):
     def get_queryset(self):
@@ -22,6 +23,7 @@ class Tournament(models.Model):
     name = models.CharField(max_length=100)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     description = models.TextField()
+    logo = models.ImageField(upload_to='tournaments/%Y/%m/%d', blank=True)
     slug = models.SlugField(max_length=250, unique_for_date='created')
     created = models.DateTimeField(auto_now_add=True)
     end_date = models.DateTimeField(auto_now=True)
@@ -30,7 +32,12 @@ class Tournament(models.Model):
     status_completed = CompletedManager()
     objects = models.Manager()
 
-
+    def get_absolute_url(self):
+        return reverse('tournament_detail',
+                       args=[self.created.year,
+                             self.created.strftime('%m'),
+                             self.created.strftime('%d'),
+                             self.slug])
 
     # Powoduje, że nie można dwóch takich samych turniejów przez jednego autora
     class Meta:

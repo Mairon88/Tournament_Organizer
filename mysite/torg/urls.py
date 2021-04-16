@@ -2,6 +2,8 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
 
+
+
 urlpatterns = [
     # path('login/', views.user_login, name='login')
     path('login/', auth_views.LoginView.as_view(), name='login'),
@@ -18,4 +20,5 @@ urlpatterns = [
     path('create_tournaments/', views.create_tournaments, name='create_tournaments'),
     path('ongoing_tournaments/', views.ongoing_tournaments, name='ongoing_tournaments'),
     path('completed_tournaments/', views.completed_tournaments, name='completed_tournaments'),
+    path('<int:year>/<int:month>/<int:day>/<slug:tournament>/', views.tournament_detail, name='tournament_detail'),
 ]

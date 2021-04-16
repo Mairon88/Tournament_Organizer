@@ -5,7 +5,7 @@
 {% block content %}
     <h1>Trwające turnieje</h1>
     {% for tournament in tournaments %}
-            <p>Nazwa turnieju: {{ tournament.name }}</p>
+            <p>Nazwa turnieju:<a href="{{ tournament.get_absolute_url }}"> {{ tournament.name }}</a></p>
             <p>Data dodania: {{ tournament.created }}</p>
             <p>Dodany przez: {{ tournament.author }}</p>
             <hr>

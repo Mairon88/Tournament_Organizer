@@ -31,11 +31,19 @@ class ProfileEditForm(forms.ModelForm):
         model = Profile
         fields = ('description','photo')
 
+
+        labels = {'description': 'Opis',
+                  'photo': 'Zdjęcie'}
+
 class TournamentRegistrationForm(forms.ModelForm):
     author = forms.CharField(widget=forms.HiddenInput(), initial=123)
     class Meta:
         model = Tournament
-        fields = ('author', 'name', 'description')
+        fields = ('author', 'name', 'description', 'slug', 'logo')
         exclude = ['author']
+
+        labels = { 'name':'Nazwa turnieju',
+                    'description': 'Opis turnieju',
+                   'logo': 'Logo turnieju'}
 
 

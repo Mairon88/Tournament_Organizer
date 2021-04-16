@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm, TournamentRegistrationForm
 from django.contrib.auth.decorators import login_required
@@ -97,14 +97,24 @@ def create_tournaments(request):
 
 @login_required
 def ongoing_tournaments(request):
-    tournaments = Tournament.status_ongoing.all()
+    tournaments = Tournament.status_ongoing.filter(author = request.user)
     return render(request,
                   'account/ongoing_tournaments.html',
                   {'tournaments':tournaments})
 
 @login_required
 def completed_tournaments(request):
-    tournaments = Tournament.status_completed.all()
+    tournaments = Tournament.status_completed.filter(author = request.user)
     return render(request,
                   'account/completed_tournaments.html',
                   {'tournaments':tournaments})
+
+@login_required
+def tournament_detail(request, year, month, day, tournament):
+    tournament = get_object_or_404(Tournament, slug=tournament,
+                                                created__year=year,
+                                                created__month=month,
+                                                created__day=day)
+    return render(request,
+                  'account/tournament_detail.html',
+                  {'tournament': tournament})
