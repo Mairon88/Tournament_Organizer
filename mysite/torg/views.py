@@ -72,7 +72,6 @@ def create_tournaments(request):
     if request.method == 'POST':
         users = get_user_model()
         obj = users.objects.get(id=request.user.id)
-        print(obj)
         tournament_form = TournamentRegistrationForm(initial={'author':obj}, data=request.POST)
         if tournament_form.is_valid():
             new_tournament = tournament_form.save(commit=False)
@@ -95,6 +94,10 @@ def create_tournaments(request):
                   'account/create_tournaments.html',
                   {'tournament_form': tournament_form})
 
+
+
+
+
 @login_required
 def ongoing_tournaments(request):
     tournaments = Tournament.status_ongoing.filter(author = request.user)
@@ -115,6 +118,9 @@ def tournament_detail(request, year, month, day, tournament):
                                                 created__year=year,
                                                 created__month=month,
                                                 created__day=day)
+
+    print(tournament.author)
     return render(request,
                   'account/tournament_detail.html',
                   {'tournament': tournament})
+
