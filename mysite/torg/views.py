@@ -146,7 +146,7 @@ def tournament_complete(request,year, month, day, tournament):
                                                 created__day=day)
 
     if request.method == 'POST' and request.POST.get('complete'):
-        tournament.ongoing = False
+        tournament.tournament_status = 'complete'
         tournament.save()
         return redirect('/account/completed_tournaments/')
 

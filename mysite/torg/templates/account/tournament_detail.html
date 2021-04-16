@@ -5,16 +5,22 @@
 {% block content %}
 
     <h1> {{ tournament.name }} </h1>
-    <p> Data utworzenia turnieju: {{ tournament.created }}</p>
+    {% if tournament.tournament_status == "ongoing" %}
+        <p> Data utworzenia turnieju: {{ tournament.created }}</p>
+    {% else %}
+        <p> Data zakończenia turnieju: {{ tournament.end_date }}</p>
+    {% endif %}
     <p> Opis turnieju: {{ tournament.description }}</p>
     <hr><hr>
     <form action="delete/" method="POST">
         {% csrf_token %}
        <p><input type="submit" value="USUŃ TURNIEJ">
     </form>
-    <form action="complete/" method="POST">
-        {% csrf_token %}
-       <p><input type="submit" value="ZAKOŃCZ TURNIEJ">
-    </form>
+    {% if tournament.tournament_status == "ongoing" %}
+        <form action="complete/" method="POST">
+            {% csrf_token %}
+           <p><input type="submit" value="ZAKOŃCZ TURNIEJ">
+        </form>
+    {% endif %}
 
 {% endblock %}

@@ -5,12 +5,11 @@ from django.template.defaultfilters import slugify
 
 class OngoingManager(models.Manager):
     def get_queryset(self):
-        return super(OngoingManager, self).get_queryset().filter(ongoing=True)
+        return super(OngoingManager, self).get_queryset().filter(tournament_status='ongoing')
 
 class CompletedManager(models.Manager):
     def get_queryset(self):
-        return super(CompletedManager, self).get_queryset().filter(ongoing=False)
-
+        return super(CompletedManager, self).get_queryset().filter(tournament_status='complete')
 
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -21,6 +20,11 @@ class Profile(models.Model):
         return 'Profil użytkownika {}'.format(self.user.username)
 
 class Tournament(models.Model):
+    STATUS_CHOICES = (
+        ('ongoing', 'Ongoing'),
+        ('complete', 'Complete')
+    )
+
     name = models.CharField(max_length=100)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     description = models.TextField()
@@ -28,10 +32,11 @@ class Tournament(models.Model):
     slug = models.SlugField(max_length=250, unique_for_date='created')
     created = models.DateTimeField(auto_now_add=True)
     end_date = models.DateTimeField(auto_now=True)
-    ongoing = models.BooleanField(default=True)  # STWORZYĆ STATUS CHOICE I WYBRAC onoing, YES/NO
+    tournament_status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='ongoing')
+    objects = models.Manager()
     status_ongoing = OngoingManager()
     status_completed = CompletedManager()
-    objects = models.Manager()
+
 
     def save(self, *args, **kwargs):
         self.slug = slugify(str(self.author)+"-"+self.name)
