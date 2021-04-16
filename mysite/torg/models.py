@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.urls import reverse
+from django.template.defaultfilters import slugify
 
 class OngoingManager(models.Manager):
     def get_queryset(self):
@@ -32,9 +33,14 @@ class Tournament(models.Model):
     status_completed = CompletedManager()
     objects = models.Manager()
 
+    def save(self, *args, **kwargs):
+        self.slug = slugify(str(self.author)+"-"+self.name)
+        super(Tournament, self).save(*args, **kwargs)
+
     def get_absolute_url(self):
         return reverse('tournament_detail',
-                       args=[self.created.year,
+                       args=[
+                             self.created.year,
                              self.created.strftime('%m'),
                              self.created.strftime('%d'),
                              self.slug])

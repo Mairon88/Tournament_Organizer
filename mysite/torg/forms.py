@@ -40,7 +40,7 @@ class TournamentRegistrationForm(forms.ModelForm):
     class Meta:
         model = Tournament
         fields = ('author', 'name', 'description', 'slug', 'logo')
-        exclude = ['author']
+        exclude = ['author','slug']
 
         labels = { 'name':'Nazwa turnieju',
                     'description': 'Opis turnieju',
