@@ -25,6 +25,11 @@ class Tournament(models.Model):
         ('complete', 'Complete')
     )
 
+    TOURNAMENT_TYPE = (
+        ('tree', 'Drzewko'),
+        ('league', 'Liga')
+    )
+
     name = models.CharField(max_length=100)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     description = models.TextField()
@@ -33,6 +38,7 @@ class Tournament(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     end_date = models.DateTimeField(auto_now=True)
     tournament_status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='ongoing')
+    tournament_type = models.CharField(max_length=10, choices=TOURNAMENT_TYPE, default='tree')
     objects = models.Manager()
     status_ongoing = OngoingManager()
     status_completed = CompletedManager()

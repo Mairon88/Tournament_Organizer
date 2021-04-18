@@ -39,11 +39,12 @@ class TournamentRegistrationForm(forms.ModelForm):
     author = forms.CharField(widget=forms.HiddenInput(), initial=123)
     class Meta:
         model = Tournament
-        fields = ('author', 'name', 'description', 'slug', 'logo')
+        fields = ('author', 'name', 'tournament_type', 'description', 'slug', 'logo')
         exclude = ['author','slug']
 
         labels = { 'name':'Nazwa turnieju',
                     'description': 'Opis turnieju',
-                   'logo': 'Logo turnieju'}
+                   'logo': 'Logo turnieju',
+                   'tournament_type': 'Typ turnieju'}
 
 
