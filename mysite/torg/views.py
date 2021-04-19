@@ -94,6 +94,26 @@ def create_tournaments(request):
                   'account/create_tournaments.html',
                   {'tournament_form': tournament_form})
 
+@login_required
+def edit_tournaments(request, year, month, day, tournament):
+    tournament = get_object_or_404(Tournament, slug=tournament,
+                                                created__year=year,
+                                                created__month=month,
+                                                created__day=day)
+
+    if request.method == 'POST':
+        users = get_user_model()
+        obj = users.objects.get(id=request.user.id)
+        tournament_form = TournamentRegistrationForm(request.POST, request.FILES, instance=tournament)
+        if tournament_form.is_valid():
+            tournament_form.save()
+            return redirect('/account/ongoing_tournaments/')
+    else:
+        tournament_form = TournamentRegistrationForm(instance=tournament)
+
+    return render(request,
+                  'account/edit_tournaments.html',
+                  {'tournament_form': tournament_form})
 
 @login_required
 def ongoing_tournaments(request):

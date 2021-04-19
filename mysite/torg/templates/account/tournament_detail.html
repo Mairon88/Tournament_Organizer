@@ -26,5 +26,10 @@
            <p><input type="submit" value="ZAKOŃCZ TURNIEJ">
         </form>
     {% endif %}
+    <form action="edit/" method="POST">
+        {% csrf_token %}
+
+       <p><input type="submit" value="EDYTUJ TURNIEJ">
+    </form>
 
 {% endblock %}

@@ -1,3 +1,4 @@
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.conf import settings
 from django.urls import reverse
@@ -39,6 +40,7 @@ class Tournament(models.Model):
     end_date = models.DateTimeField(auto_now=True)
     tournament_status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='ongoing')
     tournament_type = models.CharField(max_length=10, choices=TOURNAMENT_TYPE, default='tree')
+    num_of_players = models.IntegerField(default=0, validators=[MinValueValidator(2), MaxValueValidator(32)])
     objects = models.Manager()
     status_ongoing = OngoingManager()
     status_completed = CompletedManager()
