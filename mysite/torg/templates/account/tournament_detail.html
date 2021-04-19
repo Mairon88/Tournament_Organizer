@@ -12,10 +12,19 @@
     {% endif %}
     <p> Opis turnieju: {{ tournament.description }}</p>
     <p> Gracze:</p>
+
     {% for player in players %}
-        <p>{{ player.name }}</p>
+        <p>{{forloop.counter}}. {{ player.name }}</p>
     {% endfor %}
     <hr><hr>
+    {% if tournament.num_of_players > players|length %}
+        <form action="." method="POST">
+             {{ player_team_form.as_p }}
+             {% csrf_token %}
+            <p><input type="submit" value="DODAJ GRACZA / DRUŻYNĘ">
+            {{ message }}
+        </form>
+    {% endif %}
     <form action="delete/" method="POST">
         {% csrf_token %}
        <p><input type="submit" value="USUŃ TURNIEJ">

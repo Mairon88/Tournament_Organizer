@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login
-from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm, TournamentRegistrationForm
+from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm, TournamentRegistrationForm, AddPlayerTeamForm
 from django.contrib.auth.decorators import login_required
 from .models import Profile, Tournament, PlayerTeam
 from django.contrib.auth import get_user_model
@@ -142,11 +142,33 @@ def tournament_detail(request, year, month, day, tournament):
     players = [player for player in all_players if (player.tournament.name == tournament.name and
                                                     player.tournament.author == request.user)]
 
+
+    if request.method == 'POST':
+        player_team_form = AddPlayerTeamForm(initial={'tournament': tournament}, data=request.POST)
+        if player_team_form.is_valid():
+            new_player_team = player_team_form.save(commit=False)
+            new_player_team.tournament = tournament
+            try:
+                new_player_team.save()
+
+            except IntegrityError:
+                message = "Gracz lub dryżyna o podanej nazwie już istnieje w tym turnieju, proszę zmienić nazwę"
+                return render(request,
+                                      'account/tournament_detail.html',
+                                      {'tournament': tournament,
+                                       'players': players,
+                                        'player_team_form': player_team_form,
+                                       'message': message})
+            return HttpResponseRedirect(request.path_info)
+
+    else:
+        player_team_form = AddPlayerTeamForm()
+
     return render(request,
                   'account/tournament_detail.html',
                   {'tournament': tournament,
                    'players': players,
-                   })
+                    'player_team_form': player_team_form})
 
 @login_required
 def tournament_delete(request,year, month, day, tournament):

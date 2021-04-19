@@ -22,6 +22,7 @@ class Profile(models.Model):
 
 class Tournament(models.Model):
     STATUS_CHOICES = (
+        ('waiting', 'Waiting'),
         ('ongoing', 'Ongoing'),
         ('complete', 'Complete')
     )
@@ -64,7 +65,7 @@ class Tournament(models.Model):
         unique_together = [['author', 'name']]
 
     def __str__(self):
-        return 'Organizator: {}, turniej: {}'.format(self.author.username, self.name)
+        return self.name
 
 class PlayerTeam(models.Model):
     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
