@@ -108,8 +108,8 @@ def edit_tournaments(request, year, month, day, tournament):
         if tournament_form.is_valid():
             tournament_form.save()
             return redirect('/account/ongoing_tournaments/')
-    else:
-        tournament_form = TournamentRegistrationForm(instance=tournament)
+
+    tournament_form = TournamentRegistrationForm(instance=tournament)
 
     return render(request,
                   'account/edit_tournaments.html',

@@ -36,7 +36,8 @@ class ProfileEditForm(forms.ModelForm):
                   'photo': 'Zdjęcie'}
 
 class TournamentRegistrationForm(forms.ModelForm):
-    author = forms.CharField(widget=forms.HiddenInput(), initial=123)
+
+    author = forms.CharField(widget=forms.HiddenInput(), initial=1)
     class Meta:
         model = Tournament
         fields = ('author', 'name', 'tournament_type','num_of_players', 'description', 'slug', 'logo')
