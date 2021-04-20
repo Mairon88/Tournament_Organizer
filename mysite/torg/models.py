@@ -41,6 +41,7 @@ class Tournament(models.Model):
     logo = models.ImageField(upload_to='tournaments/%Y/%m/%d', blank=True)
     slug = models.SlugField(max_length=250, unique_for_date='created')
     created = models.DateTimeField(auto_now_add=True)
+    start_date = models.DateTimeField(auto_now=True)
     end_date = models.DateTimeField(auto_now=True)
     tournament_status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='waiting')
     tournament_type = models.CharField(max_length=10, choices=TOURNAMENT_TYPE, default='tree')

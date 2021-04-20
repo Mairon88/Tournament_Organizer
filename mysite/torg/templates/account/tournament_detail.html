@@ -5,10 +5,12 @@
 {% block content %}
 
     <h1> {{ tournament.name }} </h1>
-    {% if tournament.tournament_status == "ongoing" or "waiting"  %}
-        <p> Data utworzenia turnieju: {{ tournament.created }}</p>
-    {% else %}
+    {% if tournament.tournament_status == "ongoing" %}
+        <p> Data rozpoczęcia turnieju: {{ tournament.start_date }}</p>
+    {% elif tournament.tournament_status == "complete" %}
         <p> Data zakończenia turnieju: {{ tournament.end_date }}</p>
+    {% elif tournament.tournament_status == "waiting" %}
+        <p> Data dodania turnieju: {{ tournament.created }}</p>
     {% endif %}
     <p> Opis turnieju: {{ tournament.description }}</p>
     <p> Gracze:</p>
@@ -33,7 +35,7 @@
         </form>
     {% endif %}
 
-    {% if tournament.tournament_status == "waiting" %}
+    {% if tournament.tournament_status == "waiting" and tournament.num_of_players == players|length %}
         <form action="start/" method="POST">
             {% csrf_token %}
            <p><input type="submit" value="ROZPOCZNIJ TURNIEJ">

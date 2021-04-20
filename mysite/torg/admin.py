@@ -8,7 +8,7 @@ class ProfileAdmin(admin.ModelAdmin):
 
 @admin.register(Tournament)
 class TournamentAdmin(admin.ModelAdmin):
-    list_display = ['name','author', 'description', 'slug', 'created', 'end_date',
+    list_display = ['name','author', 'description', 'slug', 'created', 'start_date', 'end_date',
                     'tournament_status', 'tournament_type', 'num_of_players']
     prepopulated_fields = {'slug': ('name',)}
 
