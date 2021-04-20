@@ -5,7 +5,7 @@
 {% block content %}
 
     <h1> {{ tournament.name }} </h1>
-    {% if tournament.tournament_status == "ongoing" %}
+    {% if tournament.tournament_status == "ongoing" or "waiting"  %}
         <p> Data utworzenia turnieju: {{ tournament.created }}</p>
     {% else %}
         <p> Data zakończenia turnieju: {{ tournament.end_date }}</p>
@@ -15,14 +15,16 @@
 
     {% for player in players %}
         <p>{{forloop.counter}}. {{ player.name }}</p>
-        <form method="POST">
-            <input type="submit" name="delete_items" value="{{ player.pk }}"></p>
-            {% csrf_token %}
-        </form></p>
+        {% if tournament.tournament_status == "waiting" %}
+            <form method="POST">
+                <button name="delete_items" type="submit" value="{{ player.pk }}">USUŃ</button>
+                {% csrf_token %}
+            </form>
+        {% endif %}
     {% endfor %}
 
     <hr><hr>
-    {% if tournament.num_of_players > players|length %}
+    {% if tournament.num_of_players > players|length and tournament.tournament_status == "waiting" %}
         <form action="." method="POST">
              {{ player_team_form.as_p }}
              {% csrf_token %}
@@ -30,21 +32,28 @@
             {{ message }}
         </form>
     {% endif %}
-    <form action="delete/" method="POST">
-        {% csrf_token %}
-       <p><input type="submit" value="USUŃ TURNIEJ">
-    </form>
+
+    {% if tournament.tournament_status == "waiting" %}
+        <form action="start/" method="POST">
+            {% csrf_token %}
+           <p><input type="submit" value="ROZPOCZNIJ TURNIEJ">
+        </form>
+    {% endif %}
     {% if tournament.tournament_status == "ongoing" %}
         <form action="complete/" method="POST">
             {% csrf_token %}
            <p><input type="submit" value="ZAKOŃCZ TURNIEJ">
         </form>
-
+    {% endif %}
+    {% if tournament.tournament_status == "waiting" %}
         <form action="edit/" method="POST">
             {% csrf_token %}
            <p><input type="submit" value="EDYTUJ TURNIEJ">
         </form>
-
     {% endif %}
+    <form action="delete/" method="POST">
+        {% csrf_token %}
+       <p><input type="submit" value="USUŃ TURNIEJ">
+    </form>
 
 {% endblock %}

@@ -86,7 +86,7 @@ def create_tournaments(request):
                                           {'tournament_form': tournament_form,
                                           "message": message})
 
-            return redirect('/account/ongoing_tournaments/')
+            return redirect('/account/waiting_tournaments/')
     else:
         tournament_form = TournamentRegistrationForm()
 
@@ -130,6 +130,13 @@ def completed_tournaments(request):
     tournaments = Tournament.status_completed.filter(author = request.user)
     return render(request,
                   'account/completed_tournaments.html',
+                  {'tournaments':tournaments})
+
+@login_required
+def waiting_tournaments(request):
+    tournaments = Tournament.status_waiting.filter(author = request.user)
+    return render(request,
+                  'account/waiting_tournaments.html',
                   {'tournaments':tournaments})
 
 @login_required
@@ -204,4 +211,20 @@ def tournament_complete(request,year, month, day, tournament):
 
     return render(request,
                   'account/tournament_complete.html',
+                  {'tournament': tournament})
+
+@login_required
+def tournament_start(request,year, month, day, tournament):
+    tournament = get_object_or_404(Tournament, slug=tournament,
+                                                created__year=year,
+                                                created__month=month,
+                                                created__day=day)
+
+    if request.method == 'POST' and request.POST.get('start'):
+        tournament.tournament_status = 'ongoing'
+        tournament.save()
+        return redirect('/account/ongoing_tournaments/')
+
+    return render(request,
+                  'account/tournament_start.html',
                   {'tournament': tournament})

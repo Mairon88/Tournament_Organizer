@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %} Usuń turniej {% endblock %}
+
+{% block content %}
+
+    <h1> {{ tournament.name }} </h1>
+    <form action="." method="POST">
+        {% csrf_token %}
+        <h2>Czy chcesz rozpocząć turniej: {{ tournament.name }}?</h2>
+        <p><input type="submit" name="start" value="TAK"></p>
+    </form>
+    <p><a href="{{ request.META.HTTP_REFERER|escape }}"><input type="button" value="NIE"></a></p>
+
+{% endblock %}
