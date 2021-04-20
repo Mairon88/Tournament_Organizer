@@ -10,5 +10,8 @@
             <p>Dodany przez: {{ tournament.author }}</p>
             <hr>
     {% endfor %}
+    {% if not tournaments %}
+        <p>BRAK TRWAJĄCYCH TURNIEJÓW</p>
+    {% endif %}
 
 {% endblock %}
