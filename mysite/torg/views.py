@@ -164,6 +164,11 @@ def tournament_detail(request, year, month, day, tournament):
     else:
         player_team_form = AddPlayerTeamForm()
 
+    if request.method == "POST" and request.POST.get('delete_items'):
+        items_to_delete = request.POST.getlist('delete_items')
+        PlayerTeam.objects.filter(pk__in=items_to_delete).delete()
+        return HttpResponseRedirect(request.path_info)
+
     return render(request,
                   'account/tournament_detail.html',
                   {'tournament': tournament,

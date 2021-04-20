@@ -15,7 +15,12 @@
 
     {% for player in players %}
         <p>{{forloop.counter}}. {{ player.name }}</p>
+        <form method="POST">
+            <input type="submit" name="delete_items" value="{{ player.pk }}"></p>
+            {% csrf_token %}
+        </form></p>
     {% endfor %}
+
     <hr><hr>
     {% if tournament.num_of_players > players|length %}
         <form action="." method="POST">
