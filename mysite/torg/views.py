@@ -77,6 +77,7 @@ def create_tournaments(request):
             new_tournament = tournament_form.save(commit=False)
             new_tournament.author = obj
             try:
+                assert new_tournament.tournament_type == 'tree' and new_tournament.num_of_players in [2,4,8,16,32]
                 new_tournament.save()
 
             except IntegrityError:
@@ -85,6 +86,14 @@ def create_tournaments(request):
                               'account/create_tournaments.html',
                                           {'tournament_form': tournament_form,
                                           "message": message})
+
+            except:
+                message = "Liczba graczy/drużyn dla turnieju drzewkowego powinna wynosić 2,4,8,16 lub 32."
+                return render(request,
+                              'account/create_tournaments.html',
+                                          {'tournament_form': tournament_form,
+                                          "message": message})
+
 
             return redirect('/account/waiting_tournaments/')
     else:

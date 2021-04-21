@@ -85,3 +85,10 @@ class PlayerTeam(models.Model):
 
     def __str__(self):
         return 'Gracz/Drużyna: {}'.format(self.name)
+
+class Match(models.Model):
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
+    player_team_1 = models.ForeignKey(PlayerTeam, on_delete=models.CASCADE, related_name='player_team_1')
+    player_team_2 = models.ForeignKey(PlayerTeam, on_delete=models.CASCADE, related_name='player_team_2')
+    score_1 = models.IntegerField(default=0, validators=[MinValueValidator(0)])
+    score_2 = models.IntegerField(default=0, validators=[MinValueValidator(0)])
