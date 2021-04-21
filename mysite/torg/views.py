@@ -95,11 +95,12 @@ def create_tournaments(request):
                   {'tournament_form': tournament_form})
 
 @login_required
-def edit_tournaments(request, year, month, day, tournament):
+def edit_tournaments(request, year, month, day, tournament, id):
     tournament = get_object_or_404(Tournament, slug=tournament,
                                                 created__year=year,
                                                 created__month=month,
-                                                created__day=day)
+                                                created__day=day,
+                                                id=id)
 
     if request.method == 'POST':
         users = get_user_model()
@@ -107,7 +108,8 @@ def edit_tournaments(request, year, month, day, tournament):
         tournament_form = TournamentRegistrationForm(request.POST, request.FILES, instance=tournament)
         if tournament_form.is_valid():
             tournament_form.save()
-            return redirect('/account/ongoing_tournaments/')
+            return redirect(request.path.rstrip('edit/'))
+            # return redirect('/account/waiting_tournaments/')
 
     tournament_form = TournamentRegistrationForm(instance=tournament)
 
@@ -140,11 +142,12 @@ def waiting_tournaments(request):
                   {'tournaments':tournaments})
 
 @login_required
-def tournament_detail(request, year, month, day, tournament):
+def tournament_detail(request, year, month, day, tournament, id):
     tournament = get_object_or_404(Tournament, slug=tournament,
                                                 created__year=year,
                                                 created__month=month,
-                                                created__day=day)
+                                                created__day=day,
+                                                id=id)
     all_players = PlayerTeam.objects.all()
     players = [player for player in all_players if (player.tournament.name == tournament.name and
                                                     player.tournament.author == request.user)]
@@ -183,11 +186,12 @@ def tournament_detail(request, year, month, day, tournament):
                     'player_team_form': player_team_form})
 
 @login_required
-def tournament_delete(request,year, month, day, tournament):
+def tournament_delete(request, year, month, day, tournament, id):
     tournament = get_object_or_404(Tournament, slug=tournament,
                                                 created__year=year,
                                                 created__month=month,
-                                                created__day=day)
+                                                created__day=day,
+                                                id=id)
 
     if request.method == 'POST' and request.POST.get('delete'):
         tournament.delete()
@@ -198,11 +202,12 @@ def tournament_delete(request,year, month, day, tournament):
                   {'tournament': tournament})
 
 @login_required
-def tournament_complete(request,year, month, day, tournament):
+def tournament_complete(request, year, month, day, tournament, id):
     tournament = get_object_or_404(Tournament, slug=tournament,
                                                 created__year=year,
                                                 created__month=month,
-                                                created__day=day)
+                                                created__day=day,
+                                                id=id)
 
     if request.method == 'POST' and request.POST.get('complete'):
         tournament.tournament_status = 'complete'
@@ -214,12 +219,12 @@ def tournament_complete(request,year, month, day, tournament):
                   {'tournament': tournament})
 
 @login_required
-def tournament_start(request,year, month, day, tournament):
+def tournament_start(request, year, month, day, tournament, id):
     tournament = get_object_or_404(Tournament, slug=tournament,
                                                 created__year=year,
                                                 created__month=month,
-                                                created__day=day)
-
+                                                created__day=day,
+                                                id=id)
     if request.method == 'POST' and request.POST.get('start'):
         tournament.tournament_status = 'ongoing'
         tournament.save()

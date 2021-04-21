@@ -53,7 +53,7 @@ class Tournament(models.Model):
 
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(str(self.author)+"-"+self.name)
+        self.slug = slugify(str(self.author)) #slugify(str(self.author)+"-"+self.name)
         super(Tournament, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
@@ -62,7 +62,8 @@ class Tournament(models.Model):
                              self.created.year,
                              self.created.strftime('%m'),
                              self.created.strftime('%d'),
-                             self.slug])
+                             self.slug,
+                             self.id])
 
     # Powoduje, że nie można dwóch takich samych turniejów przez jednego autora
     class Meta:
