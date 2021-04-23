@@ -101,3 +101,6 @@ class Match(models.Model):
     score_2 = models.IntegerField(default=0, validators=[MinValueValidator(0)], blank=True)
 
     objects = models.Manager()
+
+    def __str__(self):
+        return self.name

@@ -162,6 +162,8 @@ def tournament_detail(request, year, month, day, tournament, id):
                                                 id=id)
 
     all_players = PlayerTeam.objects.all()
+    all_matches = Match.objects.filter(tournament = tournament).values_list('name', flat=True)
+    # print(list(all_matches))
     players = [player for player in all_players if (player.tournament.name == tournament.name and
                                                     player.tournament.author == request.user)]
 
@@ -197,35 +199,36 @@ def tournament_detail(request, year, month, day, tournament, id):
     if tournament.json_data == {} and tournament.tournament_status == 'ongoing':
         tournament.json_data = prep_json(players)
         tournament.save()
-        print("Zapisałem dane")
+        # print("Zapisałem dane")
     else:
-        print("Juz nie zapisuje")
+        pass
+        # print("Juz nie zapisuje")
     # print(tournament.json_data)
 
     match_form = MatchForm(initial={'tournament': tournament}, data=request.POST)
 
     if match_form.is_valid():
-        print("Zaczynam tworzyć mecze")
+        # print("Zaczynam tworzyć mecze")
         for column in tournament.json_data.keys():
-            print("FAZA:",column)
+            # print("FAZA:",column)
             # print(tournament.json_data[column])
             for matches in tournament.json_data[column].keys():
                 match_form = MatchForm(initial={'tournament': tournament}, data=request.POST)
                 new_match = match_form.save(commit=False)
-                print("MECZ:",matches)
+                # print("MECZ:",matches)
                 new_match.name = matches
                 # print(tournament.json_data[column][matches])
                 for player in tournament.json_data[column][matches]:
-                    print("GRACZ:",player)
+                    # print("GRACZ:",player)
                     if not new_match.player_team_1:
                         new_match.player_team_1 = player
                     else:
                         new_match.player_team_2 = player
 
-
                 new_match.tournament = tournament
-                print("Utorzyłem mecze")
-                new_match.save()
+                # print("Utorzyłem mecze")
+                if new_match.name not in all_matches:
+                    new_match.save()
 
 
     # Tworzenie meczów wraz w formularzami --------------------------------------
