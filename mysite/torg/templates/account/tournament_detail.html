@@ -26,12 +26,10 @@
     {% endfor %}
 
     <hr><hr>
-     <form action="." method="post">
-        {{ match_form.as_p }}
-        {% csrf_token %}
-    </form>
-
-    <p>Tutaj będzie drzewko</p>
+    {% for match in match_detail %}
+            <p>Nazwa meczu:<a href="{{ match.get_absolute_url }}"> {{match}} </a></p>
+            <hr>
+    {% endfor %}
     <hr><hr>
     {% if tournament.num_of_players > players|length and tournament.tournament_status == "waiting" %}
         <form action="." method="POST">

@@ -99,8 +99,18 @@ class Match(models.Model):
     player_team_2 = models.CharField(max_length=20,blank=True)
     score_1 = models.IntegerField(default=0, validators=[MinValueValidator(0)], blank=True)
     score_2 = models.IntegerField(default=0, validators=[MinValueValidator(0)], blank=True)
+    slug = models.SlugField(default='', max_length=250, unique_for_date='created')
 
     objects = models.Manager()
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(str(self.tournament.id)+'-'+str(self.name))
+        super(Match, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('match_detail',
+                       args=[
+                             self.slug])

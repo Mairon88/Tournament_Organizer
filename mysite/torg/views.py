@@ -163,6 +163,8 @@ def tournament_detail(request, year, month, day, tournament, id):
 
     all_players = PlayerTeam.objects.all()
     all_matches = Match.objects.filter(tournament = tournament).values_list('name', flat=True)
+    match_detail = Match.objects.filter(tournament=tournament)
+    print(match_detail)
     # print(list(all_matches))
     players = [player for player in all_players if (player.tournament.name == tournament.name and
                                                     player.tournament.author == request.user)]
@@ -231,24 +233,6 @@ def tournament_detail(request, year, month, day, tournament, id):
                     new_match.save()
 
 
-    # Tworzenie meczów wraz w formularzami --------------------------------------
-    # n = 0
-    # match_form = MatchForm(initial={'tournament': tournament}, data=request.POST)
-    # list_of_players = players.copy()
-    # for i in range(len(list_of_players)//2):
-    #     print(list_of_players[n],'vs',list_of_players[n+1])
-    #     if match_form.is_valid():
-    #         print("Zapisałem")
-    #         new_match = match_form.save(commit=False)
-    #         new_match.player_team_1 = list_of_players[n]
-    #         new_match.player_team_2 = list_of_players[n+1]
-    #         new_match.save()
-    #         print("Zapisałem")
-    #     n += 2
-
-    # ---------------------------------------------------------------------------
-
-
     if request.method == 'POST':
         player_team_form = AddPlayerTeamForm(initial={'tournament': tournament}, data=request.POST)
         if player_team_form.is_valid():
@@ -282,6 +266,8 @@ def tournament_detail(request, year, month, day, tournament, id):
                    'players': players,
                     'player_team_form': player_team_form,
                     'match_form': match_form,
+                   'all_matches': all_matches,
+                   'match_detail':match_detail,
                    })
 
 @login_required
@@ -332,3 +318,12 @@ def tournament_start(request, year, month, day, tournament, id):
     return render(request,
                   'account/tournament_start.html',
                   {'tournament': tournament})
+
+
+@login_required
+def match_detail(request, match):
+    match = get_object_or_404(Match, slug=match)
+
+    return render(request,
+                  'account/match_detail.html',
+                  {'match': match})
