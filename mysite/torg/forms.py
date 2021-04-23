@@ -62,11 +62,10 @@ class AddPlayerTeamForm(forms.ModelForm):
 
 class MatchForm(forms.ModelForm):
 
-    tournament = forms.CharField(widget=forms.HiddenInput(), initial=1)
+
     class Meta:
         model = Match
-        fields = ('tournament', 'player_team_1', 'player_team_2', 'score_1', 'score_2')
-        exclude = ['tournament']
+        fields = ('player_team_1', 'player_team_2', 'score_1', 'score_2')
 
         labels = { 'player_team_1':'Gracz/Drużyna 1',
                    'player_team_2': 'Gracz/Drużyna 2',

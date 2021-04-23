@@ -26,10 +26,10 @@
     {% endfor %}
 
     <hr><hr>
-<!--            <form method="POST">-->
-<!--                {{ match_form }}-->
-<!--                {% csrf_token %}-->
-<!--            </form>-->
+     <form action="." method="post">
+        {{ match_form.as_p }}
+        {% csrf_token %}
+    </form>
 
     <p>Tutaj będzie drzewko</p>
     <hr><hr>

@@ -11,39 +11,6 @@ from django.shortcuts import redirect
 import random
 
 
-
-##########################
-# Próba
-
-def prep_json(players):
-    json_data = {}
-    shuffle_players = players.copy()
-    random.shuffle(shuffle_players)
-
-    length = len(shuffle_players)
-    i = length
-    num_of_col = 0
-    while i >= 1:
-        num_of_col += 1
-        i //= 2
-        print('Liczba meczy',i,'w linii',num_of_col)
-        for j in range(num_of_col):
-            json_data.setdefault(str('column_' + str(num_of_col)), {})
-            for k in range(i):
-                json_data[('column_'+str(num_of_col))].setdefault('match_'+str(k+1),{})
-                if num_of_col == 1:
-                    json_data[('column_' + str(num_of_col))][('match_' + str(k+1))].setdefault(str(shuffle_players.pop(0)))
-                    json_data[('column_' + str(num_of_col))][('match_' + str(k+1))].setdefault(str(shuffle_players.pop(0)))
-
-
-    return json_data
-
-##########################
-
-
-
-
-
 def user_login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -198,16 +165,85 @@ def tournament_detail(request, year, month, day, tournament, id):
     players = [player for player in all_players if (player.tournament.name == tournament.name and
                                                     player.tournament.author == request.user)]
 
+    ##########################
+    # Próba
 
+    def prep_json(players):
+        json_data = {}
+        shuffle_players = players.copy()
+        random.shuffle(shuffle_players)
 
-    print(tournament.json_data)
+        length = len(shuffle_players)
+        i = length
+        num_of_col = 0
+        while i >= 1:
+            num_of_col += 1
+            i //= 2
+            print('Liczba meczy', i, 'w linii', num_of_col)
+            for j in range(num_of_col):
+                json_data.setdefault(str('column_' + str(num_of_col)), {})
+                for k in range(i):
+                    json_data[('column_' + str(num_of_col))].setdefault('match_' + (str(num_of_col)+'_'+str(k + 1)), {})
+                    if num_of_col == 1:
+                        json_data[('column_' + str(num_of_col))][('match_' + (str(num_of_col)+'_'+str(k + 1)))].setdefault(
+                            str(shuffle_players.pop(0)))
+                        json_data[('column_' + str(num_of_col))][('match_' + (str(num_of_col)+'_'+str(k + 1)))].setdefault(
+                            str(shuffle_players.pop(0)))
+
+        return json_data
+
+    ##########################
+
     if tournament.json_data == {} and tournament.tournament_status == 'ongoing':
         tournament.json_data = prep_json(players)
         tournament.save()
         print("Zapisałem dane")
     else:
         print("Juz nie zapisuje")
-    print(tournament.json_data)
+    # print(tournament.json_data)
+
+    match_form = MatchForm(initial={'tournament': tournament}, data=request.POST)
+
+    if match_form.is_valid():
+        print("Zaczynam tworzyć mecze")
+        for column in tournament.json_data.keys():
+            print("FAZA:",column)
+            # print(tournament.json_data[column])
+            for matches in tournament.json_data[column].keys():
+                match_form = MatchForm(initial={'tournament': tournament}, data=request.POST)
+                new_match = match_form.save(commit=False)
+                print("MECZ:",matches)
+                new_match.name = matches
+                # print(tournament.json_data[column][matches])
+                for player in tournament.json_data[column][matches]:
+                    print("GRACZ:",player)
+                    if not new_match.player_team_1:
+                        new_match.player_team_1 = player
+                    else:
+                        new_match.player_team_2 = player
+
+
+                new_match.tournament = tournament
+                print("Utorzyłem mecze")
+                new_match.save()
+
+
+    # Tworzenie meczów wraz w formularzami --------------------------------------
+    # n = 0
+    # match_form = MatchForm(initial={'tournament': tournament}, data=request.POST)
+    # list_of_players = players.copy()
+    # for i in range(len(list_of_players)//2):
+    #     print(list_of_players[n],'vs',list_of_players[n+1])
+    #     if match_form.is_valid():
+    #         print("Zapisałem")
+    #         new_match = match_form.save(commit=False)
+    #         new_match.player_team_1 = list_of_players[n]
+    #         new_match.player_team_2 = list_of_players[n+1]
+    #         new_match.save()
+    #         print("Zapisałem")
+    #     n += 2
+
+    # ---------------------------------------------------------------------------
 
 
     if request.method == 'POST':
@@ -236,28 +272,13 @@ def tournament_detail(request, year, month, day, tournament, id):
         PlayerTeam.objects.filter(pk__in=items_to_delete).delete()
         return HttpResponseRedirect(request.path_info)
 
-    # Tworzenie meczów wraz w formularzami --------------------------------------
-    # n = 0
-    # match_form = MatchForm(initial={'tournament': tournament}, data=request.POST)
-    # list_of_players = players.copy()
-    # for i in range(len(list_of_players)//2):
-    #     print(list_of_players[n],'vs',list_of_players[n+1])
-    #     if match_form.is_valid():
-    #         print("Zapisałem")
-    #         new_match = match_form.save(commit=False)
-    #         new_match.player_team_1 = list_of_players[n]
-    #         new_match.player_team_2 = list_of_players[n+1]
-    #         new_match.save()
-    #         print("Zapisałem")
-    #     n += 2
 
-    # ---------------------------------------------------------------------------
     return render(request,
                   'account/tournament_detail.html',
                   {'tournament': tournament,
                    'players': players,
                     'player_team_form': player_team_form,
-                    # 'match_form': match_form,
+                    'match_form': match_form,
                    })
 
 @login_required

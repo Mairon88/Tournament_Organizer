@@ -79,7 +79,7 @@ class Tournament(models.Model):
 
 class PlayerTeam(models.Model):
     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=20)
     photo = models.ImageField(upload_to='users/%Y/%m/%d', blank=True)
     objects = models.Manager()
 
@@ -92,8 +92,11 @@ class PlayerTeam(models.Model):
 
 class Match(models.Model):
     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
-    player_team_1 = models.ForeignKey(PlayerTeam, on_delete=models.CASCADE, related_name='player_team_1')
-    player_team_2 = models.ForeignKey(PlayerTeam, on_delete=models.CASCADE, related_name='player_team_2')
+    name = models.CharField(default='', max_length=8)
+    # player_team_1 = models.ForeignKey(PlayerTeam, on_delete=models.CASCADE, related_name='player_team_1', blank=True)
+    # player_team_2 = models.ForeignKey(PlayerTeam, on_delete=models.CASCADE, related_name='player_team_2', blank=True)
+    player_team_1 = models.CharField(max_length=20,blank=True)
+    player_team_2 = models.CharField(max_length=20,blank=True)
     score_1 = models.IntegerField(default=0, validators=[MinValueValidator(0)], blank=True)
     score_2 = models.IntegerField(default=0, validators=[MinValueValidator(0)], blank=True)
 
