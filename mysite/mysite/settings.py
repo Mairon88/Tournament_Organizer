@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'torg',
+    'torg.apps.TorgConfig',
+
 
 ]
 
@@ -113,7 +114,7 @@ LOGOUT_URL = 'logout'
 
 LANGUAGE_CODE = 'pl'
 
-TIME_ZONE = 'Europe/Warsaw'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 

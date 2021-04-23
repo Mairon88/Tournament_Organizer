@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Profile, Tournament, PlayerTeam
+from .models import Profile, Tournament, PlayerTeam, Match
 
 
 class LoginForm(forms.Form):
@@ -59,5 +59,18 @@ class AddPlayerTeamForm(forms.ModelForm):
 
         labels = { 'name':'Nick gracza / Nazwa drużyny',
                    'photo': 'Zdjęcie'}
+
+class MatchForm(forms.ModelForm):
+
+    tournament = forms.CharField(widget=forms.HiddenInput(), initial=1)
+    class Meta:
+        model = Match
+        fields = ('tournament', 'player_team_1', 'player_team_2', 'score_1', 'score_2')
+        exclude = ['tournament']
+
+        labels = { 'player_team_1':'Gracz/Drużyna 1',
+                   'player_team_2': 'Gracz/Drużyna 2',
+                   'score_1': 'Punkty G/D 1',
+                   'score_2': 'Punkty G/D 2'}
 
 

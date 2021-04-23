@@ -26,6 +26,13 @@
     {% endfor %}
 
     <hr><hr>
+<!--            <form method="POST">-->
+<!--                {{ match_form }}-->
+<!--                {% csrf_token %}-->
+<!--            </form>-->
+
+    <p>Tutaj będzie drzewko</p>
+    <hr><hr>
     {% if tournament.num_of_players > players|length and tournament.tournament_status == "waiting" %}
         <form action="." method="POST">
              {{ player_team_form.as_p }}

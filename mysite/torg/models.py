@@ -3,6 +3,9 @@ from django.db import models
 from django.conf import settings
 from django.urls import reverse
 from django.template.defaultfilters import slugify
+import jsonfield
+
+
 class WaitingManager(models.Manager):
     def get_queryset(self):
         return super(WaitingManager, self).get_queryset().filter(tournament_status='waiting')
@@ -46,6 +49,7 @@ class Tournament(models.Model):
     tournament_status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='waiting')
     tournament_type = models.CharField(max_length=10, choices=TOURNAMENT_TYPE, default='tree')
     num_of_players = models.IntegerField(default=2, validators=[MinValueValidator(2), MaxValueValidator(32)])
+    json_data = models.JSONField(default=dict)
     objects = models.Manager()
     status_waiting = WaitingManager()
     status_ongoing = OngoingManager()
@@ -84,11 +88,13 @@ class PlayerTeam(models.Model):
         unique_together = [['tournament', 'name']]
 
     def __str__(self):
-        return 'Gracz/Drużyna: {}'.format(self.name)
+        return self.name
 
 class Match(models.Model):
     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
     player_team_1 = models.ForeignKey(PlayerTeam, on_delete=models.CASCADE, related_name='player_team_1')
     player_team_2 = models.ForeignKey(PlayerTeam, on_delete=models.CASCADE, related_name='player_team_2')
-    score_1 = models.IntegerField(default=0, validators=[MinValueValidator(0)])
-    score_2 = models.IntegerField(default=0, validators=[MinValueValidator(0)])
+    score_1 = models.IntegerField(default=0, validators=[MinValueValidator(0)], blank=True)
+    score_2 = models.IntegerField(default=0, validators=[MinValueValidator(0)], blank=True)
+
+    objects = models.Manager()
