@@ -92,14 +92,12 @@ class PlayerTeam(models.Model):
 
 class Match(models.Model):
     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
-    name = models.CharField(default='', max_length=8)
-    # player_team_1 = models.ForeignKey(PlayerTeam, on_delete=models.CASCADE, related_name='player_team_1', blank=True)
-    # player_team_2 = models.ForeignKey(PlayerTeam, on_delete=models.CASCADE, related_name='player_team_2', blank=True)
+    name = models.CharField(default='', max_length=15)
     player_team_1 = models.CharField(max_length=20,blank=True)
     player_team_2 = models.CharField(max_length=20,blank=True)
-    score_1 = models.IntegerField(default=0, validators=[MinValueValidator(0)], blank=True)
-    score_2 = models.IntegerField(default=0, validators=[MinValueValidator(0)], blank=True)
-    slug = models.SlugField(default='', max_length=250, unique_for_date='created')
+    score_1 = models.IntegerField(blank=True, null=True)
+    score_2 = models.IntegerField(blank=True, null=True)
+    slug = models.SlugField(default='', max_length=250)
 
     objects = models.Manager()
 

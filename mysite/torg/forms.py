@@ -7,6 +7,7 @@ class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
 
+
 class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(label='Hasło', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Powtórz hasło', widget=forms.PasswordInput)
@@ -26,18 +27,20 @@ class UserEditForm(forms.ModelForm):
         model = User
         fields = ('first_name', 'email')
 
+
 class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('description','photo')
 
-
         labels = {'description': 'Opis',
                   'photo': 'Zdjęcie'}
+
 
 class TournamentRegistrationForm(forms.ModelForm):
 
     author = forms.CharField(widget=forms.HiddenInput(), initial=1)
+
     class Meta:
         model = Tournament
         fields = ('author', 'name', 'tournament_type','num_of_players', 'description', 'slug', 'logo')
@@ -60,16 +63,25 @@ class AddPlayerTeamForm(forms.ModelForm):
         labels = { 'name':'Nick gracza / Nazwa drużyny',
                    'photo': 'Zdjęcie'}
 
-class MatchForm(forms.ModelForm):
 
+class MatchForm(forms.ModelForm):
 
     class Meta:
         model = Match
-        fields = ('player_team_1', 'player_team_2', 'score_1', 'score_2')
+        fields = ('player_team_1', 'player_team_2')
 
         labels = { 'player_team_1':'Gracz/Drużyna 1',
-                   'player_team_2': 'Gracz/Drużyna 2',
-                   'score_1': 'Punkty G/D 1',
-                   'score_2': 'Punkty G/D 2'}
+                   'player_team_2': 'Gracz/Drużyna 2'}
+
+
+class ScoreForm(forms.ModelForm):
+
+    class Meta:
+        model = Match
+        fields = ('score_1', 'score_2')
+
+        labels = {'score_1': 'Punkty Gracza/Drużyny nr 1',
+                  'score_2': 'Punkty Gracza/Drużyny nr 2'
+                  }
 
 

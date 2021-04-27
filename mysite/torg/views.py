@@ -2,12 +2,13 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, \
-                   ProfileEditForm, TournamentRegistrationForm, AddPlayerTeamForm, MatchForm
+                   ProfileEditForm, TournamentRegistrationForm, AddPlayerTeamForm, MatchForm, ScoreForm
 from django.contrib.auth.decorators import login_required
 from .models import Profile, Tournament, PlayerTeam, Match
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError
 from django.shortcuts import redirect
+from django.core.exceptions import ValidationError
 import random
 
 
@@ -164,7 +165,8 @@ def tournament_detail(request, year, month, day, tournament, id):
     all_players = PlayerTeam.objects.all()
     all_matches = Match.objects.filter(tournament = tournament).values_list('name', flat=True)
     match_detail = Match.objects.filter(tournament=tournament)
-    print(match_detail)
+
+    # print(match_detail)
     # print(list(all_matches))
     players = [player for player in all_players if (player.tournament.name == tournament.name and
                                                     player.tournament.author == request.user)]
@@ -183,7 +185,7 @@ def tournament_detail(request, year, month, day, tournament, id):
         while i >= 1:
             num_of_col += 1
             i //= 2
-            print('Liczba meczy', i, 'w linii', num_of_col)
+            # print('Liczba meczy', i, 'w linii', num_of_col)
             for j in range(num_of_col):
                 json_data.setdefault(str('column_' + str(num_of_col)), {})
                 for k in range(i):
@@ -260,6 +262,59 @@ def tournament_detail(request, year, month, day, tournament, id):
         return HttpResponseRedirect(request.path_info)
 
 
+    #===========================
+    # Próba wypchnięcia zwyciezcow do nastepnych etapów
+    def push_to_next_level(match):
+        if match.score_1 and match.score_2:
+            if (match.score_1 and match.score_2) and (match.score_1 > match.score_2):
+                print("Przechodziiii", match.player_team_1)
+                print("Zwycięzca", match.name)
+                first_num = int(match.name[-3]) + 1
+                if int(match.name[-1]) % 2 == 0:
+                    second_num = int(match.name[-1]) // 2
+                else:
+                    second_num = (int(match.name[-1]) + 1) // 2
+                new_name_match = match.name[:-3] + str(first_num) + "_" + str(second_num)
+
+                for next_match in match_detail:
+                    if new_name_match == next_match.name:
+                        if not next_match.player_team_1:
+                            next_match.player_team_1 = match.player_team_1
+                            next_match.save(update_fields=['player_team_1'])
+                        else:
+                            if next_match.player_team_1 != match.player_team_1:
+                                next_match.player_team_2 = match.player_team_1
+                                next_match.save(update_fields=['player_team_2'])
+
+            elif (match.score_1 and match.score_2) and (match.score_1 < match.score_2):
+                print("Przechodzi", match.player_team_2)
+                print("Zwycięzca", match.name)
+                first_num = int(match.name[-3]) + 1
+                if int(match.name[-1]) % 2 == 0:
+                    second_num = int(match.name[-1]) // 2
+                else:
+                    second_num = (int(match.name[-1]) + 1) // 2
+                new_name_match = match.name[:-3] + str(first_num) + "_" + str(second_num)
+
+                for next_match in match_detail:
+                    if new_name_match == next_match.name:
+                        if not next_match.player_team_1:
+                            next_match.player_team_1 = match.player_team_2
+                            next_match.save(update_fields=['player_team_1'])
+                        else:
+                            if next_match.player_team_1 != match.player_team_2:
+                                next_match.player_team_2 = match.player_team_2
+                                next_match.save(update_fields=['player_team_2'])
+
+
+
+    for match in match_detail:
+        push_to_next_level(match)
+
+
+
+
+
     return render(request,
                   'account/tournament_detail.html',
                   {'tournament': tournament,
@@ -324,6 +379,43 @@ def tournament_start(request, year, month, day, tournament, id):
 def match_detail(request, match):
     match = get_object_or_404(Match, slug=match)
 
+    if request.method == 'POST':
+        score_form = ScoreForm(request.POST, request.FILES, instance=match)
+
+        if score_form.is_valid():
+            new_score = score_form.save(commit=False)
+            try:
+                assert new_score.score_1 > 0
+                assert new_score.score_2 > 0
+                assert new_score.score_1 != None
+                assert new_score.score_2 != None
+
+                try:
+                    assert new_score.score_1 != new_score.score_2
+                    print("Jestem tutaj")
+                    new_score.save()
+                    return HttpResponseRedirect(request.path_info)
+                except:
+                    message = "W turnieju nie może być remisu, wynik nie zostanie zapisany"
+                    return render(request,
+                                  'account/match_detail.html',
+                                  {'match': match,
+                                   'score_form': score_form,
+                                   'message': message})
+
+            except:
+                message = "Nie podano wyników dla obu drużyn lub wynik jest mniejszy od 0"
+                return render(request,
+                              'account/match_detail.html',
+                              {'match': match,
+                               'score_form': score_form,
+                               'message': message})
+
+
+    score_form = ScoreForm(instance=match)
+
     return render(request,
                   'account/match_detail.html',
-                  {'match': match})
+                  {'match': match,
+                   'score_form': score_form})
+

@@ -25,12 +25,22 @@
         {% endif %}
     {% endfor %}
 
-    <hr><hr>
+    <hr>
     {% for match in match_detail %}
-            <p>Nazwa meczu:<a href="{{ match.get_absolute_url }}"> {{match}} </a></p>
-            <hr>
+            {% if not match.player_team_1 or not match.player_team_2 %}
+                <p>Nazwa meczu: {{match}} </p>
+
+            {% else %}
+                <p>Nazwa meczu:<a href="{{ match.get_absolute_url }}"> {{match}} </a></p>
+            {% endif %}
+            {% if match.score_1 != none and match.score_2 != none %}
+                <p> Gracz/Drużyna nr 1: {{ match.player_team_1 }}, Punkty: {{ match.score_1 }} </p>
+                <p> Gracz/Drużyna nr 2: {{ match.player_team_2 }}, Punkty: {{ match.score_2 }} </p>
+            {% else %}
+                <p> Gracz/Drużyna nr 1: {{ match.player_team_1 }}, Punkty: -</p>
+                <p> Gracz/Drużyna nr 2: {{ match.player_team_2 }}, Punkty: -</p>
+            {% endif %}
     {% endfor %}
-    <hr><hr>
     {% if tournament.num_of_players > players|length and tournament.tournament_status == "waiting" %}
         <form action="." method="POST">
              {{ player_team_form.as_p }}
