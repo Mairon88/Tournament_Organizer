@@ -4,7 +4,7 @@
 
 {% block content %}
 
-    <h1> {{ match }} </h1>
+    <h1> {{ phase }} </h1>
     <p> {{ match.player_team_1 }} VS. {{ match.player_team_2 }} </p>
     {% if match.score_1 != match.score_2 and match.score_1 >= 0 and match.score_2 >= 0 %}
         <p> {{ match.score_1 }} : {{ match.score_2 }}</p>
@@ -12,8 +12,8 @@
         <p> - : - </p>
     {% endif %}
 
-    {% if match.score_1 != match.score_2 and match.score_1 > 0 and match.score_2 > 0 %}
-        <p>cisza</p>
+    {% if match.score_1 != match.score_2 and match.score_1 >= 0 and match.score_2 >= 0 %}
+        <p></p>
     {% else %}
             <form action="." method="POST">
                 {{ score_form.as_p }}

@@ -6,6 +6,7 @@
     <h1>Lista zakończonych turniejów</h1>
     {% for tournament in tournaments %}
             <p>Nazwa turnieju:<a href="{{ tournament.get_absolute_url }}"> {{ tournament.name }}</a></p>
+            <p>Data rozpoczęcia: {{ tournament.start_date }}</p>
             <p>Data zakończenia: {{ tournament.end_date }}</p>
             <p>Dodany przez: {{ tournament.author }}</p>
             <hr>

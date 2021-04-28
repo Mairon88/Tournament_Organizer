@@ -5,6 +5,9 @@
 {% block content %}
 
     <h1> {{ tournament.name }} </h1>
+    {% if tournament.tournament_status == "complete" %}
+        <h2>ZWYCIĘZCĄ TURNIEJU JEST: {{ winner }}</h2>
+    {% endif %}
     {% if tournament.tournament_status == "ongoing" %}
         <p> Data rozpoczęcia turnieju: {{ tournament.start_date }}</p>
     {% elif tournament.tournament_status == "complete" %}
@@ -13,8 +16,11 @@
         <p> Data dodania turnieju: {{ tournament.created }}</p>
     {% endif %}
     <p> Opis turnieju: {{ tournament.description }}</p>
-    <p> Gracze:</p>
-
+    {% if not players %}
+        <p> Gracze: Brak</p>
+    {% else %}
+        <p> Gracze: </p>
+    {% endif %}
     {% for player in players %}
         <p>{{forloop.counter}}. {{ player.name }}</p>
         {% if tournament.tournament_status == "waiting" %}
@@ -28,10 +34,10 @@
     <hr>
     {% for match in match_detail %}
             {% if not match.player_team_1 or not match.player_team_2 %}
-                <p>Nazwa meczu: {{match}} </p>
+                <p>Nazwa meczu: {{match.phase}} </p>
 
             {% else %}
-                <p>Nazwa meczu:<a href="{{ match.get_absolute_url }}"> {{match}} </a></p>
+                <p>Faza turnieju:<a href="{{ match.get_absolute_url }}"> {{match.phase}}</a></p>
             {% endif %}
             {% if match.score_1 != none and match.score_2 != none %}
                 <p> Gracz/Drużyna nr 1: {{ match.player_team_1 }}, Punkty: {{ match.score_1 }} </p>

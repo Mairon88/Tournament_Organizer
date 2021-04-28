@@ -8,8 +8,8 @@ from .models import Profile, Tournament, PlayerTeam, Match
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError
 from django.shortcuts import redirect
-from django.core.exceptions import ValidationError
-import random
+import datetime
+from . import functions
 
 
 def user_login(request):
@@ -166,44 +166,12 @@ def tournament_detail(request, year, month, day, tournament, id):
     all_matches = Match.objects.filter(tournament = tournament).values_list('name', flat=True)
     match_detail = Match.objects.filter(tournament=tournament)
 
-    # print(match_detail)
-    # print(list(all_matches))
     players = [player for player in all_players if (player.tournament.name == tournament.name and
                                                     player.tournament.author == request.user)]
 
-    ##########################
-    # Próba
-
-    def prep_json(players):
-        json_data = {}
-        shuffle_players = players.copy()
-        random.shuffle(shuffle_players)
-
-        length = len(shuffle_players)
-        i = length
-        num_of_col = 0
-        while i >= 1:
-            num_of_col += 1
-            i //= 2
-            # print('Liczba meczy', i, 'w linii', num_of_col)
-            for j in range(num_of_col):
-                json_data.setdefault(str('column_' + str(num_of_col)), {})
-                for k in range(i):
-                    json_data[('column_' + str(num_of_col))].setdefault('match_' + (str(num_of_col)+'_'+str(k + 1)), {})
-                    if num_of_col == 1:
-                        json_data[('column_' + str(num_of_col))][('match_' + (str(num_of_col)+'_'+str(k + 1)))].setdefault(
-                            str(shuffle_players.pop(0)))
-                        json_data[('column_' + str(num_of_col))][('match_' + (str(num_of_col)+'_'+str(k + 1)))].setdefault(
-                            str(shuffle_players.pop(0)))
-
-        return json_data
-
-    ##########################
-
     if tournament.json_data == {} and tournament.tournament_status == 'ongoing':
-        tournament.json_data = prep_json(players)
+        tournament.json_data = functions.prep_json(players)
         tournament.save()
-        # print("Zapisałem dane")
     else:
         pass
         # print("Juz nie zapisuje")
@@ -262,56 +230,9 @@ def tournament_detail(request, year, month, day, tournament, id):
         return HttpResponseRedirect(request.path_info)
 
 
-    #===========================
-    # Próba wypchnięcia zwyciezcow do nastepnych etapów
-    def push_to_next_level(match):
-        if match.score_1 and match.score_2:
-            if (match.score_1 and match.score_2) and (match.score_1 > match.score_2):
-                print("Przechodziiii", match.player_team_1)
-                print("Zwycięzca", match.name)
-                first_num = int(match.name[-3]) + 1
-                if int(match.name[-1]) % 2 == 0:
-                    second_num = int(match.name[-1]) // 2
-                else:
-                    second_num = (int(match.name[-1]) + 1) // 2
-                new_name_match = match.name[:-3] + str(first_num) + "_" + str(second_num)
-
-                for next_match in match_detail:
-                    if new_name_match == next_match.name:
-                        if not next_match.player_team_1:
-                            next_match.player_team_1 = match.player_team_1
-                            next_match.save(update_fields=['player_team_1'])
-                        else:
-                            if next_match.player_team_1 != match.player_team_1:
-                                next_match.player_team_2 = match.player_team_1
-                                next_match.save(update_fields=['player_team_2'])
-
-            elif (match.score_1 and match.score_2) and (match.score_1 < match.score_2):
-                print("Przechodzi", match.player_team_2)
-                print("Zwycięzca", match.name)
-                first_num = int(match.name[-3]) + 1
-                if int(match.name[-1]) % 2 == 0:
-                    second_num = int(match.name[-1]) // 2
-                else:
-                    second_num = (int(match.name[-1]) + 1) // 2
-                new_name_match = match.name[:-3] + str(first_num) + "_" + str(second_num)
-
-                for next_match in match_detail:
-                    if new_name_match == next_match.name:
-                        if not next_match.player_team_1:
-                            next_match.player_team_1 = match.player_team_2
-                            next_match.save(update_fields=['player_team_1'])
-                        else:
-                            if next_match.player_team_1 != match.player_team_2:
-                                next_match.player_team_2 = match.player_team_2
-                                next_match.save(update_fields=['player_team_2'])
-
-
-
-    for match in match_detail:
-        push_to_next_level(match)
-
-
+    for match_2 in match_detail:
+        match_2.phase = functions.rename_match_name(match_2, match_detail)
+        match_2.save(update_fields=['phase'])
 
 
 
@@ -322,7 +243,8 @@ def tournament_detail(request, year, month, day, tournament, id):
                     'player_team_form': player_team_form,
                     'match_form': match_form,
                    'all_matches': all_matches,
-                   'match_detail':match_detail,
+                   'match_detail': match_detail,
+                   'winner':tournament.winner,
                    })
 
 @login_required
@@ -367,6 +289,7 @@ def tournament_start(request, year, month, day, tournament, id):
                                                 id=id)
     if request.method == 'POST' and request.POST.get('start'):
         tournament.tournament_status = 'ongoing'
+        tournament.start_date = datetime.datetime.today()
         tournament.save()
         return redirect('/account/ongoing_tournaments/')
 
@@ -385,14 +308,13 @@ def match_detail(request, match):
         if score_form.is_valid():
             new_score = score_form.save(commit=False)
             try:
-                assert new_score.score_1 > 0
-                assert new_score.score_2 > 0
+                assert new_score.score_1 >= 0
+                assert new_score.score_2 >= 0
                 assert new_score.score_1 != None
                 assert new_score.score_2 != None
 
                 try:
                     assert new_score.score_1 != new_score.score_2
-                    print("Jestem tutaj")
                     new_score.save()
                     return HttpResponseRedirect(request.path_info)
                 except:
@@ -413,9 +335,27 @@ def match_detail(request, match):
 
 
     score_form = ScoreForm(instance=match)
+    match_detail = Match.objects.filter(tournament=match.tournament)
+    all_matches = Match.objects.filter(tournament=match.tournament).values_list('name', flat=True)
+
+
+
+    for match_2 in match_detail:
+        functions.the_winner_is(match_2, match_detail)
+
+    if match_detail and (match_detail.last().score_1 != None and match_detail.last().score_2 != None):
+        match.tournament.tournament_status = 'complete'
+        if match_detail.last().score_1 > match_detail.last().score_2:
+            match.tournament.winner = match_detail.last().player_team_1
+        else:
+            match.tournament.winner = match_detail.last().player_team_2
+        match.tournament.save(update_fields=['tournament_status', 'winner'])
+
+
 
     return render(request,
                   'account/match_detail.html',
                   {'match': match,
-                   'score_form': score_form})
+                   'score_form': score_form,
+                   'phase': match.phase})
 

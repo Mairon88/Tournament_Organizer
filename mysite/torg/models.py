@@ -44,12 +44,13 @@ class Tournament(models.Model):
     logo = models.ImageField(upload_to='tournaments/%Y/%m/%d', blank=True)
     slug = models.SlugField(max_length=250, unique_for_date='created')
     created = models.DateTimeField(auto_now_add=True)
-    start_date = models.DateTimeField(auto_now=True)
+    start_date = models.DateTimeField(auto_now_add=True)
     end_date = models.DateTimeField(auto_now=True)
     tournament_status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='waiting')
     tournament_type = models.CharField(max_length=10, choices=TOURNAMENT_TYPE, default='tree')
     num_of_players = models.IntegerField(default=2, validators=[MinValueValidator(2), MaxValueValidator(32)])
     json_data = models.JSONField(default=dict)
+    winner = models.TextField(default='')
     objects = models.Manager()
     status_waiting = WaitingManager()
     status_ongoing = OngoingManager()
@@ -98,6 +99,7 @@ class Match(models.Model):
     score_1 = models.IntegerField(blank=True, null=True)
     score_2 = models.IntegerField(blank=True, null=True)
     slug = models.SlugField(default='', max_length=250)
+    phase = models.TextField(default='')
 
     objects = models.Manager()
 
