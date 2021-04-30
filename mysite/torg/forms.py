@@ -85,3 +85,12 @@ class ScoreForm(forms.ModelForm):
                   }
 
 
+class YTForm(forms.ModelForm):
+
+    class Meta:
+        model = Match
+        fields = ('youtube',)
+
+        labels = {'youtube': 'Link do rozgrywki z YouTube',
+                  }
+

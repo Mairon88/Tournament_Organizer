@@ -17,7 +17,7 @@ class PlayerTeamAdmin(admin.ModelAdmin):
 
 @admin.register(Match)
 class MatchAdmin(admin.ModelAdmin):
-    list_display = ['tournament','name', 'player_team_1','score_1', 'player_team_2', 'score_2']
+    list_display = ['tournament','name', 'player_team_1','score_1', 'player_team_2', 'score_2', 'phase', 'youtube']
 
 
 

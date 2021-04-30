@@ -18,11 +18,25 @@
             <form action="." method="POST">
                 {{ score_form.as_p }}
                 {% csrf_token %}
-                <p><input type="submit" value="Zapisz wynik">
+                <p><input type="submit" name="save" value="Zapisz wynik">
                 {{ message }}
             </form>
     {% endif %}
+       <form action="." method="POST">
+            {{ video_form.as_p }}
+            {% csrf_token %}
+            <p><input type="submit" name="video" value="Załaduj link">
+       </form>
     <p><a href="{{ match.tournament.get_absolute_url }}">Wróć</a></p>
-
+    {% if match.youtube %}
+       <div class="photovideo">
+            <iframe class="fotovideo" width="560" height="350" src="{{match.youtube}}" frameborder="1" allow="autoplay; encrypted-media"
+            allowfullscreen="allowfullscreen"
+            mozallowfullscreen="mozallowfullscreen"
+            msallowfullscreen="msallowfullscreen"
+            oallowfullscreen="oallowfullscreen"
+            webkitallowfullscreen="webkitallowfullscreen"></iframe>
+        </div>
+    {% endif %}
 
 {% endblock %}

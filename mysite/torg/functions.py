@@ -69,7 +69,7 @@ def the_winner_is(match, match_detail):
                             next_match.player_team_2 = match.player_team_2
                             next_match.save(update_fields=['player_team_2'])
 
-
+#Przy wyzszych wartościach -3 wskazuje na "_" bo np. match_1_10
 def rename_match_name(match, match_detail):
     phases = int(str(match_detail.last())[-3])
     if int(str(match)[-3]) == phases:
@@ -80,10 +80,14 @@ def rename_match_name(match, match_detail):
         return phase
     elif int(str(match)[-3]) == phases - 2:
         phase = 'ĆWIERĆFINAŁ - ' + str(match)[-1]
+        return phase
     elif int(str(match)[-3]) == phases - 3:
-        phase = 'FAZA 1/8 TURNIEJU - ' + str(match)[-1]
-    elif int(str(match)[-3]) == phases - 4:
-        phase = 'FAZA 1/16 TURNIEJU - ' + str(match)[-1]
-    elif int(str(match)[-3]) == phases - 5:
-        phase = 'FAZA 1/32 TURNIEJU - ' + str(match)[-1]
+        phase = '1/8 TURNIEJU - ' + str(match)[-1]
+        return phase
+    elif int(str(match)[-4]) == phases - 4:
+        phase = '1/16 TURNIEJU - ' + str(match)[-2:]
+        return phase
+    elif int(str(match)[-4]) == phases - 5:
+        phase = '1/32 TURNIEJU - ' + str(match)[-2:]
+        return phase
 

@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, \
-                   ProfileEditForm, TournamentRegistrationForm, AddPlayerTeamForm, MatchForm, ScoreForm
+                   ProfileEditForm, TournamentRegistrationForm, AddPlayerTeamForm, MatchForm, ScoreForm, YTForm
 from django.contrib.auth.decorators import login_required
 from .models import Profile, Tournament, PlayerTeam, Match
 from django.contrib.auth import get_user_model
@@ -231,8 +231,9 @@ def tournament_detail(request, year, month, day, tournament, id):
 
 
     for match_2 in match_detail:
-        match_2.phase = functions.rename_match_name(match_2, match_detail)
-        match_2.save(update_fields=['phase'])
+        if match_2.phase == '':
+            match_2.phase = functions.rename_match_name(match_2, match_detail)
+            match_2.save(update_fields=['phase'])
 
 
 
@@ -302,7 +303,7 @@ def tournament_start(request, year, month, day, tournament, id):
 def match_detail(request, match):
     match = get_object_or_404(Match, slug=match)
 
-    if request.method == 'POST':
+    if request.method == 'POST' and request.POST.get('save'):
         score_form = ScoreForm(request.POST, request.FILES, instance=match)
 
         if score_form.is_valid():
@@ -333,7 +334,16 @@ def match_detail(request, match):
                                'score_form': score_form,
                                'message': message})
 
+    if request.method == 'POST' and request.POST.get('video'):
+        video_form = YTForm(request.POST, request.FILES, instance=match)
 
+        if video_form.is_valid():
+            new_video = video_form.save(commit=False)
+            new_video.save()
+            return HttpResponseRedirect(request.path_info)
+
+
+    video_form = YTForm(instance=match)
     score_form = ScoreForm(instance=match)
     match_detail = Match.objects.filter(tournament=match.tournament)
     all_matches = Match.objects.filter(tournament=match.tournament).values_list('name', flat=True)
@@ -351,11 +361,10 @@ def match_detail(request, match):
             match.tournament.winner = match_detail.last().player_team_2
         match.tournament.save(update_fields=['tournament_status', 'winner'])
 
-
-
     return render(request,
                   'account/match_detail.html',
                   {'match': match,
                    'score_form': score_form,
-                   'phase': match.phase})
+                   'phase': match.phase,
+                   'video_form': video_form})
 

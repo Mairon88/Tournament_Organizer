@@ -99,7 +99,8 @@ class Match(models.Model):
     score_1 = models.IntegerField(blank=True, null=True)
     score_2 = models.IntegerField(blank=True, null=True)
     slug = models.SlugField(default='', max_length=250)
-    phase = models.TextField(default='')
+    phase = models.CharField(default='', blank=True, max_length=15)
+    youtube = models.CharField(blank=True, max_length=200)
 
     objects = models.Manager()
 

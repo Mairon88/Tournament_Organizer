@@ -15,6 +15,10 @@
     {% elif tournament.tournament_status == "waiting" %}
         <p> Data dodania turnieju: {{ tournament.created }}</p>
     {% endif %}
+    <p> Status turnieju: {% if tournament.tournament_status == "waiting" %} Nierozpoczęty</p>
+                        <p> {% elif tournament.tournament_status == "complete" %} Zakończony</p>
+                        <p> {% else %} Trwa </p>
+{% endif %}
     <p> Opis turnieju: {{ tournament.description }}</p>
     {% if not players %}
         <p> Gracze: Brak</p>
