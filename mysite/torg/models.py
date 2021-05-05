@@ -101,6 +101,7 @@ class Match(models.Model):
     slug = models.SlugField(default='', max_length=250)
     phase = models.CharField(default='', blank=True, max_length=15)
     youtube = models.CharField(blank=True, max_length=200)
+    description = models.TextField(blank=True)
 
     objects = models.Manager()
 

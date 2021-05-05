@@ -94,3 +94,11 @@ class YTForm(forms.ModelForm):
         labels = {'youtube': 'Link do rozgrywki z YouTube',
                   }
 
+class DescriptionForm(forms.ModelForm):
+
+    class Meta:
+        model = Match
+        fields = ('description',)
+
+        labels = {'description': 'Opis meczu',
+                  }

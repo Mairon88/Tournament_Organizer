@@ -23,12 +23,19 @@
             </form>
     {% endif %}
        <form action="." method="POST">
+            {{ desc_form.as_p }}
+            {% csrf_token %}
+            <p><input type="submit" name="desc" value="Zapisz opis">
+       </form>
+
+       <form action="." method="POST">
             {{ video_form.as_p }}
             {% csrf_token %}
             <p><input type="submit" name="video" value="Załaduj link">
        </form>
     <p><a href="{{ match.tournament.get_absolute_url }}">Wróć</a></p>
     {% if match.youtube %}
+       <p>FILM Z MECZU</p>
        <div class="photovideo">
             <iframe class="fotovideo" width="560" height="350" src="{{match.youtube}}" frameborder="1" allow="autoplay; encrypted-media"
             allowfullscreen="allowfullscreen"
@@ -37,6 +44,10 @@
             oallowfullscreen="oallowfullscreen"
             webkitallowfullscreen="webkitallowfullscreen"></iframe>
         </div>
+    {% endif %}
+    {% if match.description %}
+        <p>OPIS MECZU</p>
+        <p>{{ match.description|linebreaks }}</p>
     {% endif %}
 
 {% endblock %}

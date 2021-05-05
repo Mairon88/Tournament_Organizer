@@ -2,7 +2,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, \
-                   ProfileEditForm, TournamentRegistrationForm, AddPlayerTeamForm, MatchForm, ScoreForm, YTForm
+                   ProfileEditForm, TournamentRegistrationForm, AddPlayerTeamForm, \
+                   MatchForm, ScoreForm, YTForm, DescriptionForm
 from django.contrib.auth.decorators import login_required
 from .models import Profile, Tournament, PlayerTeam, Match
 from django.contrib.auth import get_user_model
@@ -334,15 +335,15 @@ def match_detail(request, match):
                                'score_form': score_form,
                                'message': message})
 
-    if request.method == 'POST' and request.POST.get('video'):
-        video_form = YTForm(request.POST, request.FILES, instance=match)
+    if request.method == 'POST' and request.POST.get('desc'):
+        desc_form = DescriptionForm(request.POST, request.FILES, instance=match)
 
-        if video_form.is_valid():
-            new_video = video_form.save(commit=False)
-            new_video.save()
+        if desc_form.is_valid():
+            new_desc = desc_form.save(commit=False)
+            new_desc.save()
             return HttpResponseRedirect(request.path_info)
 
-
+    desc_form = DescriptionForm(instance=match)
     video_form = YTForm(instance=match)
     score_form = ScoreForm(instance=match)
     match_detail = Match.objects.filter(tournament=match.tournament)
@@ -366,5 +367,6 @@ def match_detail(request, match):
                   {'match': match,
                    'score_form': score_form,
                    'phase': match.phase,
-                   'video_form': video_form})
+                   'video_form': video_form,
+                   'desc_form': desc_form})
 
