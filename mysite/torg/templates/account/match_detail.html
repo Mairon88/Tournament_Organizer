@@ -15,13 +15,16 @@
     {% if match.score_1 != match.score_2 and match.score_1 >= 0 and match.score_2 >= 0 %}
         <p></p>
     {% else %}
+        {% if user.is_authenticated %}
             <form action="." method="POST">
                 {{ score_form.as_p }}
                 {% csrf_token %}
                 <p><input type="submit" name="save" value="Zapisz wynik">
                 {{ message }}
             </form>
+        {% endif %}
     {% endif %}
+    {% if user.is_authenticated %}
        <form action="." method="POST">
             {{ desc_form.as_p }}
             {% csrf_token %}
@@ -33,7 +36,9 @@
             {% csrf_token %}
             <p><input type="submit" name="video" value="Załaduj link">
        </form>
-    <p><a href="{{ match.tournament.get_absolute_url }}">Wróć</a></p>
+    {% endif %}
+        <p><a href="{{ match.tournament.get_absolute_url }}">Wróć</a></p>
+
     {% if match.youtube %}
        <p>FILM Z MECZU</p>
        <div class="photovideo">

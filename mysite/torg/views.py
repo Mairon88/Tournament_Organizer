@@ -155,7 +155,7 @@ def waiting_tournaments(request):
                   'account/waiting_tournaments.html',
                   {'tournaments':tournaments})
 
-@login_required
+
 def tournament_detail(request, year, month, day, tournament, id):
     tournament = get_object_or_404(Tournament, slug=tournament,
                                                 created__year=year,
@@ -300,7 +300,7 @@ def tournament_start(request, year, month, day, tournament, id):
                   {'tournament': tournament})
 
 
-@login_required
+
 def match_detail(request, match):
     match = get_object_or_404(Match, slug=match)
 
@@ -334,6 +334,14 @@ def match_detail(request, match):
                               {'match': match,
                                'score_form': score_form,
                                'message': message})
+
+    if request.method == 'POST' and request.POST.get('video'):
+        video_form = YTForm(request.POST, request.FILES, instance=match)
+
+        if video_form.is_valid():
+            new_video = video_form.save(commit=False)
+            new_video.save()
+            return HttpResponseRedirect(request.path_info)
 
     if request.method == 'POST' and request.POST.get('desc'):
         desc_form = DescriptionForm(request.POST, request.FILES, instance=match)

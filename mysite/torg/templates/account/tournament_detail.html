@@ -27,7 +27,7 @@
     {% endif %}
     {% for player in players %}
         <p>{{forloop.counter}}. {{ player.name }}</p>
-        {% if tournament.tournament_status == "waiting" %}
+        {% if tournament.tournament_status == "waiting" and user.is_authenticated %}
             <form method="POST">
                 <button name="delete_items" type="submit" value="{{ player.pk }}">USUŃ</button>
                 {% csrf_token %}
@@ -51,7 +51,7 @@
                 <p> Gracz/Drużyna nr 2: {{ match.player_team_2 }}, Punkty: -</p>
             {% endif %}
     {% endfor %}
-    {% if tournament.num_of_players > players|length and tournament.tournament_status == "waiting" %}
+    {% if tournament.num_of_players > players|length and tournament.tournament_status == "waiting" and user.is_authenticated %}
         <form action="." method="POST">
              {{ player_team_form.as_p }}
              {% csrf_token %}
@@ -60,27 +60,29 @@
         </form>
     {% endif %}
 
-    {% if tournament.tournament_status == "waiting" and tournament.num_of_players == players|length %}
+    {% if tournament.tournament_status == "waiting" and tournament.num_of_players == players|length and user.is_authenticated %}
         <form action="start/" method="POST">
             {% csrf_token %}
            <p><input type="submit" value="ROZPOCZNIJ TURNIEJ">
         </form>
     {% endif %}
-    {% if tournament.tournament_status == "ongoing" %}
+    {% if tournament.tournament_status == "ongoing" and user.is_authenticated %}
         <form action="complete/" method="POST">
             {% csrf_token %}
            <p><input type="submit" value="ZAKOŃCZ TURNIEJ">
         </form>
     {% endif %}
-    {% if tournament.tournament_status == "waiting" %}
+    {% if tournament.tournament_status == "waiting" and user.is_authenticated %}
         <form action="edit/" method="POST">
             {% csrf_token %}
            <p><input type="submit" value="EDYTUJ TURNIEJ">
         </form>
     {% endif %}
-    <form action="delete/" method="POST">
-        {% csrf_token %}
-       <p><input type="submit" value="USUŃ TURNIEJ">
-    </form>
+    {% if user.is_authenticated %}
+        <form action="delete/" method="POST">
+            {% csrf_token %}
+           <p><input type="submit" value="USUŃ TURNIEJ">
+        </form>
+    {% endif %}
 
 {% endblock %}
