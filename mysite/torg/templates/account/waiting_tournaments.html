@@ -11,9 +11,10 @@
     <div class="all_cups">
         {% for tournament in tournaments %}
             <div class="cup">
-                <p>Nazwa turnieju:<a href="{{ tournament.get_absolute_url }}"> {{ tournament.name }}</a></p>
-                <p>Data dodania: {{ tournament.created }}</p>
-                <p>Dodany przez: {{ tournament.author }}</p>
+                <p class="cup_name"><a href="{{ tournament.get_absolute_url }}"> {{ tournament.name }}</a></p>
+                <p class="num_ply">Liczba graczy: {{ tournament.num_of_players }}</p>
+                <p class="cup_description">Opis: {{ tournament.description|truncatechars:50 }}</p>
+                <p class="date">Dodano: {{ tournament.created }}</p>
             </div>
 
 

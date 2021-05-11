@@ -129,9 +129,10 @@ a {
 .all_cups div{
     margin: 20px;
     padding: 20px;
-    min-height: 179.25px;
-    min-width: 138.75px;
-    background-color: black;
+    height: 220px;
+    width: 320px;
+    background-image: url("/media/img/bg_cups.png");
+    background-size: cover;
     opacity: 0.6;
     text-align: center;
 }
@@ -178,7 +179,14 @@ textarea {
     margin-right: auto;
 }
 
-.input {
+.input #id_name {
+
+    color: white;
+    font-size: 16px;
+    font-family: 'Muli', sans-serif;
+}
+
+#id_name, #id_description, #id_first_name{
 
     color: white;
     font-size: 16px;
@@ -215,44 +223,79 @@ ul li{
    margin-left: auto;
    margin-right: auto;
    min-width: 1000px;
+
 }
 
 .cointainer_player {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
     flex-flow: row-wrap;
     margin: auto auto;
 }
-
 
 .player {
     display: flex;
     flex-wrap: wrap;
     flex-flow: row-wrap;
-    margin: auto auto;
-    width: 450px;
+    width: 350px;
     padding: 5px;
+    min-width: 350px;
 }
 
-
 .name {
-    width: 60%;
-    text-align: left;
+    width: 250px;
+    text-align: center;
     background-color : #2b2b2b;
 }
 
 .number {
-    width: 5%;
+    width: 50px;
     background-color :black;
     color: #d41737;
     text-align: center;
 }
 
 .del {
-     width: 20px;
+     width: 50px;
+     display:flex;
+     justify-content: flex-end;
 }
 
 
+
+.cup_description, .num_ply,  .date {
+    font-size: 20px;
+    padding: 5px;
+}
+
+.add_player {
+    padding: 5px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+.add_player label {
+    display: flex;
+    justify-content: center;
+    text-align: right;
+}
+
+.player_forms {
+    padding: 0 0 0 20px;
+    color: white;
+}
+
+.cup_name {
+    font-size: 24px;
+    text-transform: uppercase;
+    padding: 10px 0 20px 0;
+    font-weight: bold;
+}
+
+.cup_name a{
+    color: #d41737;
+}
 
 

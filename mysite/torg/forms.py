@@ -31,10 +31,9 @@ class UserEditForm(forms.ModelForm):
 class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('description','photo')
+        fields = ('description',)
 
-        labels = {'description': 'Opis',
-                  'photo': 'Zdjęcie'}
+        labels = {'description': 'Opis',}
 
 
 class TournamentRegistrationForm(forms.ModelForm):

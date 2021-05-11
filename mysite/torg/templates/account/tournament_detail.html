@@ -21,16 +21,17 @@
 {% endif %}
     <p> Opis turnieju: {{ tournament.description|linebreaks }}</p>
     {% if not players %}
-        <p> Gracze: Brak</p>
+        <p> GRACZE / DRUŻYNY: BRAK</p>
     {% else %}
-        <p> Gracze: </p>
+        <p> GRACZE / DRUŻYNY: </p>
     {% endif %}
+
     <div class="cointainer_player">
         {% for player in players %}
             <div class="player">
                 <div class="number">{{forloop.counter}}</div><div class="name"> {{ player.name }}</div>
                 {% if tournament.tournament_status == "waiting" and user.is_authenticated %}
-                    <div class="del"><form  method="POST">
+                    <div class="del"><form method="POST">
                         <button name="delete_items" type="submit" value="{{ player.pk }}">X</button>
                         {% csrf_token %}
                     </form></div>
@@ -57,38 +58,45 @@
     {% endfor %}
     <div class="add_buttons">
         {% if tournament.num_of_players > players|length and tournament.tournament_status == "waiting" and user.is_authenticated %}
-            <form action="." method="POST">
-                 {{ player_team_form.as_p }}
+            <form class="add_player" action="." method="POST">
+                <span class="player_forms">{{ player_team_form.as_p }}</span>
                  {% csrf_token %}
                 <input class="save" type="image" name="submit" src="/media/img/add.png"  alt="Submit" />
-                {{ message }}
+                <span class="mess" >{{ message }}</span>
             </form>
         {% endif %}
     </div>
     <div class="other_buttons">
         {% if tournament.tournament_status == "waiting" and tournament.num_of_players == players|length and user.is_authenticated %}
-            <form action="start/" method="POST">
+            <form class="add_player" action="start/" method="POST">
                 {% csrf_token %}
                 <input class="save" type="image" name="submit" src="/media/img/start.png"  alt="Submit" />
             </form>
         {% endif %}
         {% if tournament.tournament_status == "ongoing" and user.is_authenticated %}
-            <form action="complete/" method="POST">
+            <form class="add_player" action="complete/" method="POST">
                 {% csrf_token %}
                <input class="save" type="image" name="submit" src="/media/img/stop.png"  alt="Submit" />
             </form>
         {% endif %}
         {% if tournament.tournament_status == "waiting" and user.is_authenticated %}
-            <form action="edit/" method="POST">
+            <form class="add_player" action="edit/" method="POST">
                 {% csrf_token %}
                 <input class="save" type="image" name="submit" src="/media/img/edit.png"  alt="Submit" />
             </form>
         {% endif %}
         {% if user.is_authenticated %}
-            <form action="delete/" method="POST">
+            <form class="add_player" action="delete/" method="POST">
                 {% csrf_token %}
                 <input class="save" type="image" name="submit" src="/media/img/delete.png"  alt="Submit" />
             </form>
+        {% endif %}
+        {% if tournament.tournament_status == "waiting"%}
+            <p class="add_player"><a href="{% url 'waiting_tournaments' %}"><input type="image" src="/media/img/back.png"></a></p>
+        {% elif tournament.tournament_status == "ongoing"%}
+            <p class="add_player"><a href="{% url 'ongoing_tournaments' %}"><input type="image" src="/media/img/back.png"></a></p>
+        {% else %}
+            <p class="add_player"><a href="{% url 'completed_tournaments' %}"><input type="image" src="/media/img/back.png"></a></p>
         {% endif %}
     </div>
 {% endblock %}

@@ -3,7 +3,7 @@ from .models import Profile, Tournament, PlayerTeam, Match
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ['user', 'photo']
+    list_display = ['user']
 
 @admin.register(Tournament)
 class TournamentAdmin(admin.ModelAdmin):
