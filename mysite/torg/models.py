@@ -33,22 +33,23 @@ class Tournament(models.Model):
         ('complete', 'Complete')
     )
 
+    NUMBER_CHOICES = ((2, 2), (4, 4), (8, 8), (16, 16), (32, 32))
+
     TOURNAMENT_TYPE = (
         ('tree', 'Drzewko'),
-        ('league', 'Liga')
+        # ('league', 'Liga')
     )
 
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=20)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     description = models.TextField()
-    logo = models.ImageField(upload_to='tournaments/%Y/%m/%d', blank=True)
     slug = models.SlugField(max_length=250, unique_for_date='created')
     created = models.DateTimeField(auto_now_add=True)
     start_date = models.DateTimeField(auto_now_add=True)
     end_date = models.DateTimeField(auto_now=True)
     tournament_status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='waiting')
     tournament_type = models.CharField(max_length=10, choices=TOURNAMENT_TYPE, default='tree')
-    num_of_players = models.IntegerField(default=2, validators=[MinValueValidator(2), MaxValueValidator(32)])
+    num_of_players = models.IntegerField(validators=[MinValueValidator(2), MaxValueValidator(32)],)
     json_data = models.JSONField(default=dict)
     winner = models.TextField(default='')
     objects = models.Manager()

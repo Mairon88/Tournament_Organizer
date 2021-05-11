@@ -43,8 +43,11 @@ table {
 }
 
 /*=================================================*/
+@import url(http://fonts.googleapis.com/css?family=Muli);
+
 
 body {
+    font-family: 'Muli', sans-serif;
     background-image: url("/media/img/torg.png");
     background-size:cover;
     background-attachment: fixed;
@@ -74,26 +77,182 @@ a {
     margin-top: 0em;
 }
 
-.logo {
-    display: block;
-    text-align: center;
-}
 
 .menu {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .menu div {
-
+    margin: auto auto;
+    padding: 20px;
+    padding: 20px;
+    min-height: 179.25px;
+    min-width: 138.75px;
 }
-
-
 .menu div img{
-    width: 75%;
+    width: 100%;
     height: 100%;
     display: block;
     margin-left: auto;
     margin-right: auto;
+    min-height: 179.25px;
+    min-width: 138.75px;
 }
+
+.header{
+    display: flex;
+    align-items: center;
+    justify-content: space-auround
+}
+
+
+.header div.logo {
+    text-align: center;
+    width: 100%;
+}
+
+.logo img {
+    width: 400px;
+}
+
+.all_cups {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    flex-flow: row-wrap;
+    margin: auto auto;
+}
+
+.all_cups div{
+    margin: 20px;
+    padding: 20px;
+    min-height: 179.25px;
+    min-width: 138.75px;
+    background-color: black;
+    opacity: 0.6;
+    text-align: center;
+}
+
+.all_cups div p{
+    margin: auto auto;
+}
+
+
+input[type="text"],input[type="number"],input[type="file"], select {
+  font-family: 'Muli', sans-serif;
+  background-color :#2b2b2b;
+  font-size: 16px;
+  width: 300px;
+    text-align: center;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    box-sizing:border-box;
+    padding: 20px;
+    vertical-align:top;
+    border:2px solid black;
+    height:27px;
+    display:block;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 80%;
+}
+
+textarea {
+  font-family: 'Muli', sans-serif;
+  background-color :#2b2b2b;
+  font-size: 16px;
+  width: 300px;
+  height: 300px;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    box-sizing:border-box;
+    padding: 20px;
+    vertical-align:top;
+    border:2px solid black;
+    height:27px;
+    display:block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.input {
+
+    color: white;
+    font-size: 16px;
+    font-family: 'Muli', sans-serif;
+}
+
+textarea {
+  width: 300px;
+  height: 300px;
+  resize: none;
+  line-height: 2em;
+}
+
+.forms {
+    text-align: center;
+}
+
+.forms p{
+    padding: 10px;
+}
+
+
+ul li{
+  display: inline;
+  padding: 8px;
+}
+
+
+.bg_waiting, .bg_ongoing, .bg_finished, .bg_create {
+   z-index: -10;
+   position: fixed;
+   opacity: 0.4;
+   width: 60%;
+   margin-left: auto;
+   margin-right: auto;
+   min-width: 1000px;
+}
+
+.cointainer_player {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    flex-flow: row-wrap;
+    margin: auto auto;
+}
+
+
+.player {
+    display: flex;
+    flex-wrap: wrap;
+    flex-flow: row-wrap;
+    margin: auto auto;
+    width: 450px;
+    padding: 5px;
+}
+
+
+.name {
+    width: 60%;
+    text-align: left;
+    background-color : #2b2b2b;
+}
+
+.number {
+    width: 5%;
+    background-color :black;
+    color: #d41737;
+    text-align: center;
+}
+
+.del {
+     width: 20px;
+}
+
+
+
+

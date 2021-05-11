@@ -4,6 +4,9 @@
 
 {% block content %}
     <h1>Lista zakończonych turniejów</h1>
+    <div class="bg_finished_container">
+        <img class="bg_finished" src="/media/img/bg_finished.png">
+    </div>
     {% for tournament in tournaments %}
             <p>Nazwa turnieju:<a href="{{ tournament.get_absolute_url }}"> {{ tournament.name }}</a></p>
             <p>Data rozpoczęcia: {{ tournament.start_date }}</p>

@@ -3,6 +3,13 @@
 {% block title %}Panel główny{% endblock %}
 
 {% block content %}
-    <h1>Panel główny</h1>
-    <p> Witaj w panelu głównym</p>
+        {% if request.user.is_authenticated %}
+            <div class="menu">
+                    <div><a href="{% url 'create_tournaments' %}"><img src="/media/img/create.png" width="60%" height="60%"></a></div>
+                    <div><a href="{% url 'waiting_tournaments' %}"><img src="/media/img/pending.png" width="60%" height="60%"></a></div>
+                    <div><a href="{% url 'ongoing_tournaments' %}"><img src="/media/img/ongoing.png" width="60%" height="60%"></a></div>
+                    <div><a href="{% url 'completed_tournaments' %}"><img src="/media/img/finished.png" width="60%" height="60%"></a></div>
+                    <div><a href="#"><img src="/media/img/statistics.png" width="60%" height="60%"></a></div>
+            </div>
+        {% endif %}
 {% endblock %}

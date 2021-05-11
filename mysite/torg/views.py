@@ -259,7 +259,7 @@ def tournament_delete(request, year, month, day, tournament, id):
 
     if request.method == 'POST' and request.POST.get('delete'):
         tournament.delete()
-        return redirect('/account/ongoing_tournaments/')
+        return redirect('/account/')
 
     return render(request,
                   'account/tournament_delete.html',

@@ -19,22 +19,26 @@
                         <p> {% elif tournament.tournament_status == "complete" %} Zakończony</p>
                         <p> {% else %} Trwa </p>
 {% endif %}
-    <p> Opis turnieju: {{ tournament.description }}</p>
+    <p> Opis turnieju: {{ tournament.description|linebreaks }}</p>
     {% if not players %}
         <p> Gracze: Brak</p>
     {% else %}
         <p> Gracze: </p>
     {% endif %}
-    {% for player in players %}
-        <p>{{forloop.counter}}. {{ player.name }}</p>
-        {% if tournament.tournament_status == "waiting" and user.is_authenticated %}
-            <form method="POST">
-                <button name="delete_items" type="submit" value="{{ player.pk }}">USUŃ</button>
-                {% csrf_token %}
-            </form>
-        {% endif %}
-    {% endfor %}
+    <div class="cointainer_player">
+        {% for player in players %}
+            <div class="player">
+                <div class="number">{{forloop.counter}}</div><div class="name"> {{ player.name }}</div>
+                {% if tournament.tournament_status == "waiting" and user.is_authenticated %}
+                    <div class="del"><form  method="POST">
+                        <button name="delete_items" type="submit" value="{{ player.pk }}">X</button>
+                        {% csrf_token %}
+                    </form></div>
+                {% endif %}
+            </div>
 
+        {% endfor %}
+    </div>
     <hr>
     {% for match in match_detail %}
             {% if not match.player_team_1 or not match.player_team_2 %}
@@ -51,38 +55,40 @@
                 <p> Gracz/Drużyna nr 2: {{ match.player_team_2 }}, Punkty: -</p>
             {% endif %}
     {% endfor %}
-    {% if tournament.num_of_players > players|length and tournament.tournament_status == "waiting" and user.is_authenticated %}
-        <form action="." method="POST">
-             {{ player_team_form.as_p }}
-             {% csrf_token %}
-            <p><input type="submit" value="DODAJ GRACZA / DRUŻYNĘ">
-            {{ message }}
-        </form>
-    {% endif %}
-
-    {% if tournament.tournament_status == "waiting" and tournament.num_of_players == players|length and user.is_authenticated %}
-        <form action="start/" method="POST">
-            {% csrf_token %}
-           <p><input type="submit" value="ROZPOCZNIJ TURNIEJ">
-        </form>
-    {% endif %}
-    {% if tournament.tournament_status == "ongoing" and user.is_authenticated %}
-        <form action="complete/" method="POST">
-            {% csrf_token %}
-           <p><input type="submit" value="ZAKOŃCZ TURNIEJ">
-        </form>
-    {% endif %}
-    {% if tournament.tournament_status == "waiting" and user.is_authenticated %}
-        <form action="edit/" method="POST">
-            {% csrf_token %}
-           <p><input type="submit" value="EDYTUJ TURNIEJ">
-        </form>
-    {% endif %}
-    {% if user.is_authenticated %}
-        <form action="delete/" method="POST">
-            {% csrf_token %}
-           <p><input type="submit" value="USUŃ TURNIEJ">
-        </form>
-    {% endif %}
-
+    <div class="add_buttons">
+        {% if tournament.num_of_players > players|length and tournament.tournament_status == "waiting" and user.is_authenticated %}
+            <form action="." method="POST">
+                 {{ player_team_form.as_p }}
+                 {% csrf_token %}
+                <input class="save" type="image" name="submit" src="/media/img/add.png"  alt="Submit" />
+                {{ message }}
+            </form>
+        {% endif %}
+    </div>
+    <div class="other_buttons">
+        {% if tournament.tournament_status == "waiting" and tournament.num_of_players == players|length and user.is_authenticated %}
+            <form action="start/" method="POST">
+                {% csrf_token %}
+                <input class="save" type="image" name="submit" src="/media/img/start.png"  alt="Submit" />
+            </form>
+        {% endif %}
+        {% if tournament.tournament_status == "ongoing" and user.is_authenticated %}
+            <form action="complete/" method="POST">
+                {% csrf_token %}
+               <input class="save" type="image" name="submit" src="/media/img/stop.png"  alt="Submit" />
+            </form>
+        {% endif %}
+        {% if tournament.tournament_status == "waiting" and user.is_authenticated %}
+            <form action="edit/" method="POST">
+                {% csrf_token %}
+                <input class="save" type="image" name="submit" src="/media/img/edit.png"  alt="Submit" />
+            </form>
+        {% endif %}
+        {% if user.is_authenticated %}
+            <form action="delete/" method="POST">
+                {% csrf_token %}
+                <input class="save" type="image" name="submit" src="/media/img/delete.png"  alt="Submit" />
+            </form>
+        {% endif %}
+    </div>
 {% endblock %}

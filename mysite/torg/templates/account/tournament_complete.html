@@ -5,6 +5,7 @@
 {% block content %}
 
     <h1> {{ tournament.name }} </h1>
+
     <form action="." method="POST">
         {% csrf_token %}
         <h2>Czy chcesz zakończyć turniej: {{ tournament.name }}?</h2>

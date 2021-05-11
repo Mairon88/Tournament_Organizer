@@ -1,13 +1,18 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
 
 {% block title %}Stwórz turniej{% endblock %}
 
 {% block content %}
     <h1>Stwórz nowy turniej</h1>
-    <form action="." method="post">
+    <div class="bg_waiting_container">
+        <img class="bg_create" src="/media/img/bg_create.png">
+    </div>
+    <form class="forms" action="." method="post">
         {{ tournament_form.as_p }}
+<!--        {% render_field tournament_form.name class="input" %}-->
         {% csrf_token %}
-        <p><input type="submit" value="Zapisz turniej"></p>
+        <input class="save" type="image" name="submit" src="/media/img/save.png"  alt="Submit"/>
         {{ message }}
     </form>
 {% endblock %}

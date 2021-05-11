@@ -4,12 +4,21 @@
 
 {% block content %}
     <h1>Nierozpoczęte turnieje</h1>
-    {% for tournament in tournaments %}
-            <p>Nazwa turnieju:<a href="{{ tournament.get_absolute_url }}"> {{ tournament.name }}</a></p>
-            <p>Data dodania: {{ tournament.created }}</p>
-            <p>Dodany przez: {{ tournament.author }}</p>
-            <hr>
-    {% endfor %}
+    <div class="bg_waiting_container">
+        <img class="bg_waiting" src="/media/img/bg_waiting.png">
+    </div>
+
+    <div class="all_cups">
+        {% for tournament in tournaments %}
+            <div class="cup">
+                <p>Nazwa turnieju:<a href="{{ tournament.get_absolute_url }}"> {{ tournament.name }}</a></p>
+                <p>Data dodania: {{ tournament.created }}</p>
+                <p>Dodany przez: {{ tournament.author }}</p>
+            </div>
+
+
+        {% endfor %}
+    </div>
     {% if not tournaments %}
         <p>BRAK NIEROZPOCZĘTYCH TURNIEJÓW</p>
     {% endif %}

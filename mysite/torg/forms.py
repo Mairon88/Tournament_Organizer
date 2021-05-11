@@ -38,19 +38,31 @@ class ProfileEditForm(forms.ModelForm):
 
 
 class TournamentRegistrationForm(forms.ModelForm):
-
+    NUMBER_CHOICES = ((2, 2), (4, 4), (8, 8), (16, 16), (32, 32))
     author = forms.CharField(widget=forms.HiddenInput(), initial=1)
+
+    # widgets = {
+    #     'name': forms.CharField(attrs={'class': 'input'}),
+    #     'num_of_players': forms.IntegerField(attrs={'class': 'input'}),
+    #     'description': forms.TextField(attrs={'class': 'input'}),
+    #     'logo': forms.ImageField(attrs={'class': 'input'})
+    #
+    # }
 
     class Meta:
         model = Tournament
-        fields = ('author', 'name', 'tournament_type','num_of_players', 'description', 'slug', 'logo')
+        fields = ('author', 'name','num_of_players', 'description', 'slug')
         exclude = ['author','slug']
 
-        labels = { 'name':'Nazwa turnieju',
+        labels = {
                     'description': 'Opis turnieju',
-                   'logo': 'Logo turnieju',
-                   'tournament_type': 'Typ turnieju',
                    'num_of_players': 'Liczba graczy'}
+
+    name = forms.CharField(widget=forms.TextInput(attrs={'class': 'input'}),label='Nazwa turnieju')
+    num_of_players = forms.ChoiceField(choices=Tournament.NUMBER_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}), label='Liczba graczy')
+    description = forms.CharField(widget=forms.Textarea(attrs={'class': 'input'}), label='Opis turnieju')
+
+
 
 class AddPlayerTeamForm(forms.ModelForm):
 
@@ -62,6 +74,7 @@ class AddPlayerTeamForm(forms.ModelForm):
 
         labels = { 'name':'Nick gracza / Nazwa drużyny',
                    'photo': 'Zdjęcie'}
+
 
 
 class MatchForm(forms.ModelForm):

@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load widget_tweaks %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -12,33 +12,25 @@
 
 </head>
 <body>
-    <div id="header">
-        <span class="logo"><img src="/media/img/logo.png"></span>
-        <span class="dashboard"><a href="{% url 'dashboard' %}" ><img src="/media/img/home.png" width="60%" height="60%"></a></span>
-        <span class="profile"><a href="{% url 'edit' %}"><img src="/media/img/profile.png" width="60%" height="60%"></a></span>
-        {% if request.user.is_authenticated %}
-            <div class="menu">
-                    <div><a href="{% url 'create_tournaments' %}"><img src="/media/img/create.png" width="60%" height="60%"></a></div>
-                    <div><a href="{% url 'waiting_tournaments' %}"><img src="/media/img/pending.png" width="60%" height="60%"></a></div>
-                    <div><a href="{% url 'ongoing_tournaments' %}"><img src="/media/img/ongoing.png" width="60%" height="60%"></a></div>
-                    <div><a href="{% url 'completed_tournaments' %}"><img src="/media/img/finished.png" width="60%" height="60%"></a></div>
-                    <div><a href="#"><img src="/media/img/statistics.png" width="60%" height="60%"></a></div>
+    <div class="header">
+        <div class="logo"><img src="/media/img/logo.png"></div>
 
-            </div>
-        {% endif %}
-        <span class="user">
+    </div>
+            <div class="user">
             {% if request.user.is_authenticated %}
                 Witaj, {{ request.user.first_name }}!
                 <a href ="{% url 'logout' %}">Wyloguj</a>
             {% else %}
                 <a href="{% url 'login' %}">Zaloguj</a>
             {% endif %}
-        </span>
-    </div>
+        </div>
+     <span class="dashboard"><a href="{% url 'dashboard' %}" ><img src="/media/img/home.png" width="60%" height="60%"></a></span>
+    <span class="profile"><a href="{% url 'edit' %}"><img src="/media/img/profile.png" width="60%" height="60%"></a></span>
     <div id="content">
         {% block content %}
         {% endblock %}
     </div>
+    <script src="http://127.0.0.1:8005/liverreload.js" charset="utf-8"></script>
 
 </body>
 </html>

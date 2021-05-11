@@ -4,6 +4,9 @@
 
 {% block content %}
     <h1>Trwające turnieje</h1>
+    <div class="bg_ongoing_container">
+        <img class="bg_ongoing" src="/media/img/bg_ongoing.png">
+    </div>
     {% for tournament in tournaments %}
             <p>Nazwa turnieju:<a href="{{ tournament.get_absolute_url }}"> {{ tournament.name }}</a></p>
             <p>Data rozpoczęcia: {{ tournament.start_date }}</p>
