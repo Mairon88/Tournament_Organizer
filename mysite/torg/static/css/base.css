@@ -43,12 +43,12 @@ table {
 }
 
 /*=================================================*/
-@import url(http://fonts.googleapis.com/css?family=Muli);
-
+@import url(https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap);
 
 body {
-    font-family: 'Muli', sans-serif;
+    font-family: 'Russo One', sans-serif;
     background-image: url("/media/img/torg.png");
+    letter-spacing: 1px;
     background-size:cover;
     background-attachment: fixed;
     z-index:-10;
@@ -133,7 +133,7 @@ a {
     width: 320px;
     background-image: url("/media/img/bg_cups.png");
     background-size: cover;
-    opacity: 0.6;
+    opacity: 0.4;
     text-align: center;
 }
 
@@ -143,7 +143,6 @@ a {
 
 
 input[type="text"],input[type="number"],input[type="file"], select {
-  font-family: 'Muli', sans-serif;
   background-color :#2b2b2b;
   font-size: 16px;
   width: 300px;
@@ -162,7 +161,8 @@ input[type="text"],input[type="number"],input[type="file"], select {
 }
 
 textarea {
-  font-family: 'Muli', sans-serif;
+  font-family: 'Russo One', sans-serif;
+  letter-spacing: 1px;
   background-color :#2b2b2b;
   font-size: 16px;
   width: 300px;
@@ -183,14 +183,16 @@ textarea {
 
     color: white;
     font-size: 16px;
-    font-family: 'Muli', sans-serif;
+    font-family: 'Russo One', sans-serif;
+    letter-spacing: 1px;
 }
 
 #id_name, #id_description, #id_first_name{
 
     color: white;
     font-size: 16px;
-    font-family: 'Muli', sans-serif;
+    font-family: 'Russo One', sans-serif;
+    letter-spacing: 1px;
 }
 
 textarea {
@@ -218,7 +220,7 @@ ul li{
 .bg_waiting, .bg_ongoing, .bg_finished, .bg_create {
    z-index: -10;
    position: fixed;
-   opacity: 0.4;
+   opacity: 0.6;
    width: 60%;
    margin-left: auto;
    margin-right: auto;
@@ -236,20 +238,22 @@ ul li{
 
 .player {
     display: flex;
-    flex-wrap: wrap;
     flex-flow: row-wrap;
-    width: 350px;
+    width: 370px;
     padding: 5px;
     min-width: 350px;
 }
 
 .name {
-    width: 250px;
+    padding: 2px 0 0 0;
+    width: 270px;
+    font-size: 20px;
     text-align: center;
-    background-color : #2b2b2b;
+    background-color : #1c1c1c;
 }
 
 .number {
+    padding: 2px 0 0 0;
     width: 50px;
     background-color :black;
     color: #d41737;
@@ -259,11 +263,10 @@ ul li{
 .del {
      width: 50px;
      display:flex;
-     justify-content: flex-end;
+     justify-content: center;
+     background-color :black;
+     padding: 0 0 3px 0;
 }
-
-
-
 .cup_description, .num_ply,  .date {
     font-size: 20px;
     padding: 5px;
@@ -281,7 +284,11 @@ ul li{
     justify-content: center;
     text-align: right;
 }
-
+div .mess{
+    display: flex;
+    justify-content: center;
+    text-align: left;
+}
 .player_forms {
     padding: 0 0 0 20px;
     color: white;
@@ -296,6 +303,58 @@ ul li{
 
 .cup_name a{
     color: #d41737;
+}
+
+
+h1{
+    text-align: center;
+    font-size: 46px;
+    padding: 20px;
+}
+
+.title{
+       font-size: 50px;
+}
+
+.players {
+    text-align: center;
+    font-size: 26px;
+    padding: 20px;
+}
+
+.desc {
+    text-align: center;
+    font-size: 26px;
+    padding: 20px;
+}
+
+.mess {
+    color: #D64137
+}
+
+.cup_info {
+    text-align: center;
+}
+
+.input_submit input[type=submit] {
+    background: url("/media/img/yes.png");
+    border: 0;
+    display: block;
+    height: 91px;
+    width: 162px;
+}
+
+h2{
+    text-align: center;
+}
+
+div .yes_no {
+    display: flex;
+    justify-content: center;
+}
+
+.yes, .no {
+    padding: 20px;
 }
 
 

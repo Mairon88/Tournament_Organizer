@@ -4,27 +4,34 @@
 
 {% block content %}
 
-    <h1> {{ tournament.name }} </h1>
-    {% if tournament.tournament_status == "complete" %}
-        <h2>ZWYCIĘZCĄ TURNIEJU JEST: {{ winner }}</h2>
-    {% endif %}
-    {% if tournament.tournament_status == "ongoing" %}
-        <p> Data rozpoczęcia turnieju: {{ tournament.start_date }}</p>
-    {% elif tournament.tournament_status == "complete" %}
-        <p> Data zakończenia turnieju: {{ tournament.end_date }}</p>
-    {% elif tournament.tournament_status == "waiting" %}
-        <p> Data dodania turnieju: {{ tournament.created }}</p>
-    {% endif %}
-    <p> Status turnieju: {% if tournament.tournament_status == "waiting" %} Nierozpoczęty</p>
-                        <p> {% elif tournament.tournament_status == "complete" %} Zakończony</p>
-                        <p> {% else %} Trwa </p>
-{% endif %}
-    <p> Opis turnieju: {{ tournament.description|linebreaks }}</p>
-    {% if not players %}
-        <p> GRACZE / DRUŻYNY: BRAK</p>
-    {% else %}
-        <p> GRACZE / DRUŻYNY: </p>
-    {% endif %}
+    <div class="cup_info">
+        <h1 class="title"> {{ tournament.name }} </h1>
+        {% if tournament.tournament_status == "complete" %}
+            <h2>ZWYCIĘZCĄ TURNIEJU JEST: {{ winner }}</h2>
+        {% endif %}
+        {% if tournament.tournament_status == "ongoing" %}
+            <p> Data rozpoczęcia turnieju: {{ tournament.start_date }}</p>
+        {% elif tournament.tournament_status == "complete" %}
+            <p> Data zakończenia turnieju: {{ tournament.end_date }}</p>
+        {% elif tournament.tournament_status == "waiting" %}
+            <p> Data dodania turnieju: {{ tournament.created }}</p>
+        {% endif %}
+        <p> Status turnieju: {% if tournament.tournament_status == "waiting" %} Nierozpoczęty</p>
+                            <p> {% elif tournament.tournament_status == "complete" %} Zakończony</p>
+                            <p> {% else %} Trwa </p>
+                            {% endif %}
+
+        <p class="desc"> Opis turnieju: {{ tournament.description|linebreaks }}</p>
+        <div class="players">
+            {% if not players %}
+                <p> Gracze / Drużyny: Brak</p>
+            {% else %}
+               <p> Gracze / Drużyny: </p>
+            {% endif %}
+        </div>
+    </div>
+
+
 
     <div class="cointainer_player">
         {% for player in players %}
@@ -57,12 +64,12 @@
             {% endif %}
     {% endfor %}
     <div class="add_buttons">
+        <div class="mess" >{{ message }}</div>
         {% if tournament.num_of_players > players|length and tournament.tournament_status == "waiting" and user.is_authenticated %}
             <form class="add_player" action="." method="POST">
-                <span class="player_forms">{{ player_team_form.as_p }}</span>
+                <div class="player_forms">{{ player_team_form.as_p }}</div>
                  {% csrf_token %}
-                <input class="save" type="image" name="submit" src="/media/img/add.png"  alt="Submit" />
-                <span class="mess" >{{ message }}</span>
+                <div class="save"><input  type="image" name="submit" src="/media/img/add.png"  alt="Submit" /></div>
             </form>
         {% endif %}
     </div>

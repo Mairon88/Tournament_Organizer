@@ -9,21 +9,17 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>TORG - {% block title %}{% endblock %}</title>
     <link href="{% static 'css/base.css' %}" rel="stylesheet">
-
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="header">
         <div class="logo"><img src="/media/img/logo.png"></div>
 
+
     </div>
-            <div class="user">
-            {% if request.user.is_authenticated %}
-                Witaj, {{ request.user.first_name }}!
-                <a href ="{% url 'logout' %}">Wyloguj</a>
-            {% else %}
-                <a href="{% url 'login' %}">Zaloguj</a>
-            {% endif %}
-        </div>
+
      <span class="dashboard"><a href="{% url 'dashboard' %}" ><img src="/media/img/home.png" width="60%" height="60%"></a></span>
     <span class="profile"><a href="{% url 'edit' %}"><img src="/media/img/profile.png" width="60%" height="60%"></a></span>
     <div id="content">

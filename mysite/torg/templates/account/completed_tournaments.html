@@ -7,13 +7,18 @@
     <div class="bg_finished_container">
         <img class="bg_finished" src="/media/img/bg_finished.png">
     </div>
-    {% for tournament in tournaments %}
-            <p>Nazwa turnieju:<a href="{{ tournament.get_absolute_url }}"> {{ tournament.name }}</a></p>
-            <p>Data rozpoczęcia: {{ tournament.start_date }}</p>
-            <p>Data zakończenia: {{ tournament.end_date }}</p>
-            <p>Dodany przez: {{ tournament.author }}</p>
-            <hr>
-    {% endfor %}
+    <div class="all_cups">
+        {% for tournament in tournaments %}
+            <div class="cup">
+                <p class="cup_name"><a href="{{ tournament.get_absolute_url }}"> {{ tournament.name }}</a></p>
+                <p class="num_ply">Liczba graczy: {{ tournament.num_of_players }}</p>
+                <p class="cup_description">Opis: {{ tournament.description|truncatechars:50 }}</p>
+                <p class="date">Dodano: {{ tournament.created }}</p>
+            </div>
+
+
+        {% endfor %}
+    </div>
     {% if not tournaments %}
         <p>BRAK ZAKOŃCZONYCH TURNIEJÓW</p>
     {% endif %}

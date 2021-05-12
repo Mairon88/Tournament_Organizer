@@ -5,11 +5,12 @@
 {% block content %}
 
     <h1> {{ tournament.name }} </h1>
-    <form action="." method="POST">
-        {% csrf_token %}
-        <h2>Czy chcesz rozpocząć turniej: {{ tournament.name }}?</h2>
-        <p><input type="submit" name="start" value="TAK"></p>
-    </form>
-    <p><a href="{{ request.META.HTTP_REFERER|escape }}"><input type="button" value="NIE"></a></p>
-
+    <h2>Czy chcesz rozpocząć turniej: {{ tournament.name }}?</h2>
+     <div class="yes_no">
+        <form class="yes" action="." method="POST">
+            <p class="input_submit"><input type="submit" name="start" value="T"></p>
+            {% csrf_token %}
+        </form>
+        <p><a href="{{ request.META.HTTP_REFERER|escape }}"><input class="no" type="image" name="submit" src="/media/img/no.png"  alt="Submit"/></a></p>
+    </div>
 {% endblock %}
