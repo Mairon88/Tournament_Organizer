@@ -58,32 +58,10 @@ body {
 }
 
 
-.dashboard {
-    position: fixed;
-    left: 0;
-    top: 40%;
-    width: 8em;
-    margin-top: 0em;
-}
-
-.user {
-    position: fixed;
-    left: 0;
-    top: 10%;
-    width: 8em;
-    margin-top: 0em;
-}
-
-.profile {
-    position: fixed;
-    left: 0;
-    top: 70%;
-    width: 8em;
-    margin-top: 0em;
-}
 
 
 .menu {
+    height: 35em;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -91,6 +69,7 @@ body {
 }
 
 .menu div {
+    display: flex;
     margin: auto auto;
     padding: 20px;
     padding: 20px;
@@ -468,3 +447,65 @@ a {
     display: flex;
     justify-content: center;
 }
+
+.dashboard {
+    position: fixed;
+    left: 0;
+    top: 5%;
+    width: 8em;
+    margin-top: 0em;
+}
+
+.user {
+    position: fixed;
+    right: 0;
+    top: 5%;
+    width: 8em;
+    margin-right: 0em;
+    text-align: right;
+}
+
+.profile {
+    position: fixed;
+    right: 0;
+    top: 25%;
+    width: 8em;
+    margin-right: 0em;
+    text-align: right;
+}
+
+.small_create {
+    position: fixed;
+    left: 0;
+    top: 25%;
+    width: 8em;
+    margin-top: 0em;
+}
+
+.small_pending {
+    position: fixed;
+    left: 0;
+    top: 45%;
+    width: 8em;
+    margin-top: 0em;
+}
+
+.small_ongoing {
+    position: fixed;
+    left: 0;
+    top: 65%;
+    width: 8em;
+    margin-top: 0em;
+}
+
+.small_finished {
+    position: fixed;
+    left: 0;
+    top: 85%;
+    width: 8em;
+    margin-top: 0em;
+}
+
+
+/*==================DRZEWKO===================*/
+

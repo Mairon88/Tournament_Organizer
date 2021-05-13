@@ -28,10 +28,23 @@
         </span>
      <span class="dashboard"><a href="{% url 'dashboard' %}" ><img src="/media/img/home.png" width="60%" height="60%"></a></span>
     <span class="profile"><a href="{% url 'edit' %}"><img src="/media/img/profile.png" width="60%" height="60%"></a></span>
+
+    <span class="dashboard"><a href="{% url 'dashboard' %}" ><img src="/media/img/home.png" width="60%" height="60%"></a></span>
+    <span class="profile"><a href="{% url 'edit' %}"><img src="/media/img/profile.png" width="60%" height="60%"></a></span>
+    {% if request.path != '/account/' %}
+
+        <span class="small_create"><a href="{% url 'create_tournaments' %}" ><img src="/media/img/small_create.png" width="60%" height="60%"></a></span>
+        <span class="small_pending"><a href="{% url 'waiting_tournaments' %}"><img src="/media/img/small_pending.png" width="60%" height="60%"></a></span>
+        <span class="small_ongoing"><a href="{% url 'ongoing_tournaments' %}"><img src="/media/img/small_ongoing.png" width="60%" height="60%"></a></span>
+        <span class="small_finished"><a href="{% url 'completed_tournaments' %}"><img src="/media/img/small_finished.png" width="60%" height="60%"></a></span>
+    {% endif %}
+
     <div id="content">
         {% block content %}
         {% endblock %}
     </div>
+
+
 
     <script src="http://127.0.0.1:8005/liverreload.js" charset="utf-8"></script>
 
