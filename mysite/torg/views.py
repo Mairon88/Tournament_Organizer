@@ -51,8 +51,16 @@ def register(request):
 
 @login_required
 def dashboard(request):
+    ong_tour = len(Tournament.status_ongoing.filter(author = request.user))
+    fin_tour = len(Tournament.status_completed.filter(author=request.user))
+    pen_tour = len(Tournament.status_waiting.filter(author=request.user))
+
     return render(request, 'account/dashboard.html',
-                  {'section': 'dashboard'})
+                  {'section': 'dashboard',
+                   'ong_tour': ong_tour,
+                   'fin_tour': fin_tour,
+                   'pen_tour': pen_tour,
+                   })
 
 @login_required
 def edit(request):

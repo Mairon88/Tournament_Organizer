@@ -21,6 +21,7 @@
                             <p> {% elif tournament.tournament_status == "complete" %} Zakończony</p>
                             <p> {% else %} Trwa </p>
                             {% endif %}
+        <p> Liczba graczy: {{ players|length }} / {{ tournament.num_of_players }}</p>
 
         <p class="desc"> Opis turnieju: {{ tournament.description|linebreaks }}</p>
         <div class="players">
@@ -99,12 +100,14 @@
                 <input class="save" type="image" name="submit" src="/media/img/delete.png"  alt="Submit" />
             </form>
         {% endif %}
-        {% if tournament.tournament_status == "waiting"%}
-            <p class="add_player"><a href="{% url 'waiting_tournaments' %}"><input class="back" type="image" src="/media/img/back.png"></a></p>
-        {% elif tournament.tournament_status == "ongoing"%}
-            <p class="add_player"><a href="{% url 'ongoing_tournaments' %}"><input class="back" type="image" src="/media/img/back.png"></a></p>
-        {% else %}
-            <p class="add_player"><a href="{% url 'completed_tournaments' %}"><input class="back" type="image" src="/media/img/back.png"></a></p>
+        {% if user.is_authenticated %}
+            {% if tournament.tournament_status == "waiting"%}
+                <p class="add_player"><a href="{% url 'waiting_tournaments' %}"><input class="back" type="image" src="/media/img/back.png"></a></p>
+            {% elif tournament.tournament_status == "ongoing"%}
+                <p class="add_player"><a href="{% url 'ongoing_tournaments' %}"><input class="back" type="image" src="/media/img/back.png"></a></p>
+            {% else %}
+                <p class="add_player"><a href="{% url 'completed_tournaments' %}"><input class="back" type="image" src="/media/img/back.png"></a></p>
+            {% endif %}
         {% endif %}
     </div>
 {% endblock %}

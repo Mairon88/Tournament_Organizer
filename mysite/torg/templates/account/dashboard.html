@@ -7,9 +7,9 @@
 
             <div class="menu">
                     <div><a href="{% url 'create_tournaments' %}"><img src="/media/img/create.png" width="60%" height="60%"></a></div>
-                    <div><a href="{% url 'waiting_tournaments' %}"><img src="/media/img/pending.png" width="60%" height="60%"></a></div>
-                    <div><a href="{% url 'ongoing_tournaments' %}"><img src="/media/img/ongoing.png" width="60%" height="60%"></a></div>
-                    <div><a href="{% url 'completed_tournaments' %}"><img src="/media/img/finished.png" width="60%" height="60%"></a></div>
+                    <div><p class="pen_tour">{{ pen_tour }}</p><a href="{% url 'waiting_tournaments' %}"><img src="/media/img/pending.png" width="60%" height="60%"></a></div>
+                    <div><p class="ong_tour">{{ ong_tour }}</p><a href="{% url 'ongoing_tournaments' %}"><img src="/media/img/ongoing.png" width="60%" height="60%"></a></div>
+                    <div><p class="fin_tour">{{ fin_tour }}</p><a href="{% url 'completed_tournaments' %}"><img src="/media/img/finished.png" width="60%" height="60%"></a></div>
 <!--                    <div><a href="#"><img src="/media/img/statistics.png" width="60%" height="60%"></a></div>-->
             </div>
         {% endif %}
