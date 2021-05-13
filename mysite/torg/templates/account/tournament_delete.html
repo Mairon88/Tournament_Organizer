@@ -8,7 +8,7 @@
     <h2>Czy chcesz usunąć turniej: {{ tournament.name }}?</h2>
     <div class="yes_no">
         <form class="yes" action="." method="POST">
-                <p class="input_submit"><input type="submit" name="delete" value="t"></p>
+                <p class="input_submit"><input type="submit" name="delete" value=" "></p>
                 {% csrf_token %}
         </form>
         <p><a href="{{ request.META.HTTP_REFERER|escape }}"><input class="no" type="image" name="submit" src="/media/img/no.png"  alt="Submit"/></a></p>
