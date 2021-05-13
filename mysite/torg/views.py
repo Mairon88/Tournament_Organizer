@@ -304,6 +304,27 @@ def tournament_start(request, year, month, day, tournament, id):
 def match_detail(request, match):
     match = get_object_or_404(Match, slug=match)
 
+
+    if request.method == 'POST' and request.POST.get('video'):
+        video_form = YTForm(request.POST, request.FILES, instance=match)
+
+        if video_form.is_valid():
+            new_video = video_form.save(commit=False)
+            new_video.save()
+            return HttpResponseRedirect(request.path_info)
+
+    if request.method == 'POST' and request.POST.get('desc'):
+        desc_form = DescriptionForm(request.POST, request.FILES, instance=match)
+
+        if desc_form.is_valid():
+            new_desc = desc_form.save(commit=False)
+            new_desc.save()
+            return HttpResponseRedirect(request.path_info)
+
+    video_form = YTForm(instance=match)
+    score_form = ScoreForm(instance=match)
+    desc_form = DescriptionForm(instance=match)
+
     if request.method == 'POST' and request.POST.get('save'):
         score_form = ScoreForm(request.POST, request.FILES, instance=match)
 
@@ -333,27 +354,13 @@ def match_detail(request, match):
                               'account/match_detail.html',
                               {'match': match,
                                'score_form': score_form,
-                               'message': message})
+                               'message': message,
+                               'video_form': video_form,
+                                'desc_form': desc_form})
 
-    if request.method == 'POST' and request.POST.get('video'):
-        video_form = YTForm(request.POST, request.FILES, instance=match)
 
-        if video_form.is_valid():
-            new_video = video_form.save(commit=False)
-            new_video.save()
-            return HttpResponseRedirect(request.path_info)
 
-    if request.method == 'POST' and request.POST.get('desc'):
-        desc_form = DescriptionForm(request.POST, request.FILES, instance=match)
 
-        if desc_form.is_valid():
-            new_desc = desc_form.save(commit=False)
-            new_desc.save()
-            return HttpResponseRedirect(request.path_info)
-
-    desc_form = DescriptionForm(instance=match)
-    video_form = YTForm(instance=match)
-    score_form = ScoreForm(instance=match)
     match_detail = Match.objects.filter(tournament=match.tournament)
     all_matches = Match.objects.filter(tournament=match.tournament).values_list('name', flat=True)
 

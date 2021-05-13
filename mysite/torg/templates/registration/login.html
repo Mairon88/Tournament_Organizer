@@ -12,11 +12,11 @@
         konta, możesz je utworzyć <a href="{% url 'register' %}">tutaj</a>.</p>
     {% endif %}
     <div class="login-form">
-        <form action="{% url 'login' %}" method="post">
+        <form class="forms" action="{% url 'login' %}" method="post">
             {{ form.as_p }}
             {% csrf_token %}
             <input type="hidden" name="next" value="{{ next }}"/>
-            <p><input type="submit" value="Zaloguj"></p>
+            <input class="save" type="image" name="submit" src="/media/img/login_2.png"  alt="Submit"/>
         </form>
         <p><a href="{% url 'password_reset' %}">Zapommniałeś hasła?</a></p>
     </div>

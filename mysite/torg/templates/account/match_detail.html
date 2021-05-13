@@ -5,42 +5,58 @@
 {% block content %}
 
     <h1> {{ phase }} </h1>
-    <p> {{ match.player_team_1 }} VS. {{ match.player_team_2 }} </p>
-    {% if match.score_1 != match.score_2 and match.score_1 >= 0 and match.score_2 >= 0 %}
-        <p> {{ match.score_1 }} : {{ match.score_2 }}</p>
-    {% else %}
-        <p> - : - </p>
-    {% endif %}
+    <div class="pairs">
+        <div class="ply_1"> {{ match.player_team_1 }} </div>
+        <div class="sep">-</div>
+        <div class="ply_2"> {{ match.player_team_2 }} </div>
+    </div>
+    <div class="scores">
+        {% if match.score_1 != match.score_2 and match.score_1 >= 0 and match.score_2 >= 0 %}
+             <div class="ply_1"> {{ match.score_1 }}</div>
+             <div class="sep">:</div>
+             <div class="ply_2">{{ match.score_2 }}</div>
+        {% else %}
+             <div class="ply_1"> -</div>
+             <div class="sep">:</div>
+             <div class="ply_2">-</div>
+        {% endif %}
+    </div>
+
 
     {% if match.score_1 != match.score_2 and match.score_1 >= 0 and match.score_2 >= 0 %}
         <p></p>
     {% else %}
         {% if user.is_authenticated %}
-            <form action="." method="POST">
+            <form class="forms" action="." method="POST">
                 {{ score_form.as_p }}
                 {% csrf_token %}
-                <p><input type="submit" name="save" value="Zapisz wynik">
-                {{ message }}
+                <p class="input_save"><input type="submit" name="save" value=" ">
+                    <span class="mess">{{ message }}</span>
             </form>
         {% endif %}
     {% endif %}
+
+    {% if match.description %}
+
+    <p class="desc">REALCJA Z MECZU</p>
+        {% if not user.is_authenticated %}
+            <div class="desc_2">
+                <p >{{ match.description|linebreaks }}</p>
+            </div>
+        {% endif %}
+
+    {% endif %}
+
+
     {% if user.is_authenticated %}
-       <form action="." method="POST">
+       <form class="forms" action="." method="POST">
             {{ desc_form.as_p }}
             {% csrf_token %}
-            <p><input type="submit" name="desc" value="Zapisz opis">
-       </form>
-
-       <form action="." method="POST">
-            {{ video_form.as_p }}
-            {% csrf_token %}
-            <p><input type="submit" name="video" value="Załaduj link">
+            <p class="input_relation"><input type="submit" name="desc" value=" ">
        </form>
     {% endif %}
-        <p><a href="{{ match.tournament.get_absolute_url }}">Wróć</a></p>
-
     {% if match.youtube %}
-       <p>FILM Z MECZU</p>
+       <p class="desc">FILM Z MECZU</p>
        <div class="photovideo">
             <iframe class="fotovideo" width="560" height="350" src="{{match.youtube}}" frameborder="1" allow="autoplay; encrypted-media"
             allowfullscreen="allowfullscreen"
@@ -48,11 +64,18 @@
             msallowfullscreen="msallowfullscreen"
             oallowfullscreen="oallowfullscreen"
             webkitallowfullscreen="webkitallowfullscreen"></iframe>
-        </div>
+       </div>
     {% endif %}
-    {% if match.description %}
-        <p>OPIS MECZU</p>
-        <p>{{ match.description|linebreaks }}</p>
+    {% if user.is_authenticated %}
+       <form class="forms" action="." method="POST">
+            {{ video_form.as_p }}
+            {% csrf_token %}
+            <p class="input_load" ><input type="submit" name="video" value=" ">
+       </form>
     {% endif %}
+        <p><a href="{{ match.tournament.get_absolute_url }}"><input class="save" type="image" name="submit" src="/media/img/back.png"  alt="Submit"/></a></p>
+
+
+
 
 {% endblock %}

@@ -57,22 +57,27 @@ body {
     margin: 1% 10% 1% 10%;
 }
 
-a {
-     color: white;
-}
 
 .dashboard {
     position: fixed;
     left: 0;
-    top: 30%;
+    top: 40%;
     width: 8em;
-    margin-top: -2.5em;
+    margin-top: 0em;
+}
+
+.user {
+    position: fixed;
+    left: 0;
+    top: 10%;
+    width: 8em;
+    margin-top: 0em;
 }
 
 .profile {
     position: fixed;
     left: 0;
-    top: 50%;
+    top: 70%;
     width: 8em;
     margin-top: 0em;
 }
@@ -115,7 +120,7 @@ a {
 }
 
 .logo img {
-    width: 400px;
+    width: 380px;
 }
 
 .all_cups {
@@ -142,10 +147,11 @@ a {
 }
 
 
-input[type="text"],input[type="number"],input[type="file"], select {
+input[type="text"],input[type="number"],input[type="file"],input[type="password"], input[type="email"],select {
   background-color :#2b2b2b;
+  font-family: 'Russo One', sans-serif;
   font-size: 16px;
-  width: 300px;
+  width: 400px;
     text-align: center;
     -webkit-box-sizing:border-box;
     -moz-box-sizing:border-box;
@@ -158,6 +164,11 @@ input[type="text"],input[type="number"],input[type="file"], select {
     margin-left: auto;
     margin-right: auto;
     line-height: 80%;
+    color: white;
+}
+
+input[type="number"] {
+    width: 150px;
 }
 
 textarea {
@@ -165,8 +176,8 @@ textarea {
   letter-spacing: 1px;
   background-color :#2b2b2b;
   font-size: 16px;
-  width: 300px;
-  height: 300px;
+  width: 500px;
+  height: 200px;
     -webkit-box-sizing:border-box;
     -moz-box-sizing:border-box;
     box-sizing:border-box;
@@ -196,8 +207,8 @@ textarea {
 }
 
 textarea {
-  width: 300px;
-  height: 300px;
+  width: 500px;
+  height: 200px;
   resize: none;
   line-height: 2em;
 }
@@ -308,12 +319,12 @@ div .mess{
 
 h1{
     text-align: center;
-    font-size: 46px;
-    padding: 20px;
+    font-size: 42px;
+    padding: 15px;
 }
 
 .title{
-       font-size: 50px;
+       font-size: 42px;
 }
 
 .players {
@@ -325,7 +336,13 @@ h1{
 .desc {
     text-align: center;
     font-size: 26px;
-    padding: 20px;
+    padding: 50px 0 20px 0;
+}
+
+.desc_2 {
+    text-align: center;
+    font-size: 16px;
+    padding: 0 0 20px 0;
 }
 
 .mess {
@@ -344,8 +361,23 @@ h1{
     width: 162px;
 }
 
+.input_save input[type=submit] {
+    background: url("/media/img/save_score.png");
+    border: 0;
+    display: block;
+    height: 91px;
+    width: 269px;
+    margin: auto auto;
+}
+
 h2{
     text-align: center;
+}
+
+.change_pass {
+    text-align: center;
+    padding: 20px;
+
 }
 
 div .yes_no {
@@ -357,4 +389,82 @@ div .yes_no {
     padding: 20px;
 }
 
+.other_buttons{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
 
+.save_changes {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.ul_li ul li {
+    display: block;
+}
+
+a {
+     color: #d41737;
+}
+
+.pair {
+    font-size: 26px;
+    text-align: center;
+}
+
+.input_load input[type=submit] {
+    background: url("/media/img/load_link.png");
+    border: 0;
+    display: block;
+    height: 91px;
+    width: 269px;
+    margin: auto auto;
+}
+
+
+.input_relation input[type=submit] {
+    background: url("/media/img/save_relation.png");
+    border: 0;
+    display: block;
+    height: 91px;
+    width: 280px;
+    margin: auto auto;
+}
+
+
+.pairs {
+    padding: 10px;
+    display: flex;
+    font-size: 26px;
+}
+
+.scores {
+    padding: 10px;
+    display: flex;
+    font-size: 26px;
+}
+
+.ply_1 {
+
+    width: 45%;
+    text-align: right;
+}
+.ply_2 {
+
+    width: 45%;
+    text-align: left;
+}
+
+.sep {
+
+    width: 10%;
+    text-align: center;
+}
+
+.photovideo {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}

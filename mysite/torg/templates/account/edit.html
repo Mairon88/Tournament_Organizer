@@ -3,15 +3,15 @@
 {% block title %}Edycja konta{% endblock %}
 
 {% block content %}
-  <h1>Edycja profilu</h1>
-  Tutaj możesz <a href="{% url 'password_change' %}">zmienić hasło</a> lub edytować podstawowe ustawienia konta za
+  <h1>Edytuj profil</h1>
+  <p class="change_pass">Tutaj możesz <a href="{% url 'password_change' %}">zmienić hasło</a> lub edytować podstawowe ustawienia konta za
   pomoca poniższego formularza.</p>
-  <form action="." method="post" enctype="multipart/form-data">
-    {{ user_form.as_p }}
-    {{ profile_form.as_p }}
-    {% csrf_token %}
-    <p><input type="submit" value="Zapisz zmiany"></p>
-  </form>
+<!--  <form action="." method="post" enctype="multipart/form-data">-->
+<!--    {{ user_form.as_p }}-->
+<!--    {{ profile_form.as_p }}-->
+<!--    {% csrf_token %}-->
+<!--    <div class="save_changes"><input  type="image" name="submit" src="/media/img/save_changes.png"  alt="Submit" /></div>-->
+<!--  </form>-->
 
 
 {% endblock %}

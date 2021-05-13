@@ -4,10 +4,10 @@
 
 {% block content %}
     <h1>Utwórz konto</h1>
-    <p>Wypełnij poniższy fomularz, aby się zarejestrować:</p>
-    <form action="." method="post">
+    <p class="forms" >Wypełnij poniższy fomularz, aby się zarejestrować:</p>
+    <form class="forms" action="." method="post">
         {{ user_form.as_p }}
         {% csrf_token %}
-        <p><input type="submit" value="Utwórz konto"></p>
+        <input class="save" type="image" name="submit" src="/media/img/create_user.png"  alt="Submit"/>
     </form>
 {% endblock %}

@@ -8,6 +8,6 @@
     <form action="." method="post">
         {{ form.as_p }}
         {% csrf_token %}
-        <p><input type="submit" value="Zaloguj"></p>
+        <input class="save" type="image" name="submit" src="/media/img/login_2.png"  alt="Submit"/>
     </form>
 {% endblock %}

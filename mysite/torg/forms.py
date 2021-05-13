@@ -68,11 +68,10 @@ class AddPlayerTeamForm(forms.ModelForm):
     tournament = forms.CharField(widget=forms.HiddenInput(), initial=1)
     class Meta:
         model = PlayerTeam
-        fields = ('tournament', 'name', 'photo')
-        exclude = ['tournament', 'photo']
+        fields = ('tournament', 'name')
+        exclude = ['tournament',]
 
-        labels = { 'name':'Nick gracza / Nazwa drużyny',
-                   'photo': 'Zdjęcie'}
+        labels = { 'name':'Nick gracza / Nazwa drużyny',}
 
 
 
@@ -112,5 +111,5 @@ class DescriptionForm(forms.ModelForm):
         model = Match
         fields = ('description',)
 
-        labels = {'description': 'Opis meczu',
+        labels = {'description': '',
                   }
