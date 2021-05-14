@@ -241,6 +241,7 @@ def tournament_detail(request, year, month, day, tournament, id):
 
     for match_2 in match_detail:
         if match_2.phase == '':
+            print(match_2, match_detail)
             match_2.phase = functions.rename_match_name(match_2, match_detail)
             match_2.save(update_fields=['phase'])
 

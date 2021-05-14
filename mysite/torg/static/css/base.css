@@ -526,4 +526,38 @@ a {
 
 
 /*==================DRZEWKO===================*/
+.tree {
+    display: flex;
+    align-items: strech;
+}
+
+.tree div {
+    padding: 5px;
+
+}
+
+.szesc div{
+    border: 1px solid;
+
+
+}
+
+.osma div{
+    border: 1px solid;
+    height: 172px;
+
+
+}
+
+.czwarta div{
+
+
+}
+
+.polfinal div{
+    border: 1px solid;
+
+}
+
+
 

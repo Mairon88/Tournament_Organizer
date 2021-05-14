@@ -50,21 +50,112 @@
         {% endfor %}
     </div>
     <hr>
-    {% for match in match_detail %}
-            {% if not match.player_team_1 or not match.player_team_2 %}
-                <p>Nazwa meczu: {{match.phase}} </p>
+    <div class="tree">
+            <div class="szesc">
+                {% for match in match_detail %}
+                    {% if "1/16 TURNIEJU" in match.phase %}
+                        <div>
+                            {% if not match.player_team_1 or not match.player_team_2 %}
+                                <p>Nazwa meczu: {{match.phase}} </p>
+                            {% else %}
+                                <p>Faza turnieju:<a href="{{ match.get_absolute_url }}"> {{match.phase}}</a></p>
+                            {% endif %}
+                            {% if match.score_1 != none and match.score_2 != none %}
+                                <p> Gracz/Drużyna: {{ match.player_team_1 }}, Punkty: {{ match.score_1 }} </p>
+                                <p> Gracz/Drużyna: {{ match.player_team_2 }}, Punkty: {{ match.score_2 }} </p>
+                            {% else %}
+                                <p> Gracz/Drużyna: {{ match.player_team_1 }}, Punkty: -</p>
+                                <p> Gracz/Drużyna: {{ match.player_team_2 }}, Punkty: -</p>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="osma">
+                {% for match in match_detail %}
+                    {% if "1/8 TURNIEJU" in match.phase %}
+                        <div>
+                            {% if not match.player_team_1 or not match.player_team_2 %}
+                                <p>Nazwa meczu: {{match.phase}} </p>
+                            {% else %}
+                                <p>Faza turnieju:<a href="{{ match.get_absolute_url }}"> {{match.phase}}</a></p>
+                            {% endif %}
+                            {% if match.score_1 != none and match.score_2 != none %}
+                                <p> Gracz/Drużyna: {{ match.player_team_1 }}, Punkty: {{ match.score_1 }} </p>
+                                <p> Gracz/Drużyna: {{ match.player_team_2 }}, Punkty: {{ match.score_2 }} </p>
+                            {% else %}
+                                <p> Gracz/Drużyna: {{ match.player_team_1 }}, Punkty: -</p>
+                                <p> Gracz/Drużyna: {{ match.player_team_2 }}, Punkty: -</p>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="czwarta">
+                {% for match in match_detail %}
+                    {% if "ĆWIERĆFINAŁ" in match.phase %}
+                        <div>
+                            {% if not match.player_team_1 or not match.player_team_2 %}
+                                <p>Nazwa meczu: {{match.phase}} </p>
+                            {% else %}
+                                <p>Faza turnieju:<a href="{{ match.get_absolute_url }}"> {{match.phase}}</a></p>
+                            {% endif %}
+                            {% if match.score_1 != none and match.score_2 != none %}
+                                <p> Gracz/Drużyna: {{ match.player_team_1 }}, Punkty: {{ match.score_1 }} </p>
+                                <p> Gracz/Drużyna: {{ match.player_team_2 }}, Punkty: {{ match.score_2 }} </p>
+                            {% else %}
+                                <p> Gracz/Drużyna: {{ match.player_team_1 }}, Punkty: -</p>
+                                <p> Gracz/Drużyna: {{ match.player_team_2 }}, Punkty: -</p>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
 
-            {% else %}
-                <p>Faza turnieju:<a href="{{ match.get_absolute_url }}"> {{match.phase}}</a></p>
-            {% endif %}
-            {% if match.score_1 != none and match.score_2 != none %}
-                <p> Gracz/Drużyna: {{ match.player_team_1 }}, Punkty: {{ match.score_1 }} </p>
-                <p> Gracz/Drużyna: {{ match.player_team_2 }}, Punkty: {{ match.score_2 }} </p>
-            {% else %}
-                <p> Gracz/Drużyna: {{ match.player_team_1 }}, Punkty: -</p>
-                <p> Gracz/Drużyna: {{ match.player_team_2 }}, Punkty: -</p>
-            {% endif %}
-    {% endfor %}
+            <div class="polfinal">
+                {% for match in match_detail %}
+                    {% if "PÓŁFINAŁ" in match.phase %}
+                        <div>
+                            {% if not match.player_team_1 or not match.player_team_2 %}
+                                <p>Nazwa meczu: {{match.phase}} </p>
+                            {% else %}
+                                <p>Faza turnieju:<a href="{{ match.get_absolute_url }}"> {{match.phase}}</a></p>
+                            {% endif %}
+                            {% if match.score_1 != none and match.score_2 != none %}
+                                <p> Gracz/Drużyna: {{ match.player_team_1 }}, Punkty: {{ match.score_1 }} </p>
+                                <p> Gracz/Drużyna: {{ match.player_team_2 }}, Punkty: {{ match.score_2 }} </p>
+                            {% else %}
+                                <p> Gracz/Drużyna: {{ match.player_team_1 }}, Punkty: -</p>
+                                <p> Gracz/Drużyna: {{ match.player_team_2 }}, Punkty: -</p>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="final">
+                    {% for match in match_detail %}
+                        {% if " FINAŁ" in match.phase %}
+                            <div>
+                                {% if not match.player_team_1 or not match.player_team_2 %}
+                                    <p>Faza turnieju: {{match.phase}} </p>
+                                {% else %}
+                                    <p>Faza turnieju:<a href="{{ match.get_absolute_url }}"> {{match.phase}}</a></p>
+                                {% endif %}
+                                {% if match.score_1 != none and match.score_2 != none %}
+                                    <p> Gracz/Drużyna: {{ match.player_team_1 }}, Punkty: {{ match.score_1 }} </p>
+                                    <p> Gracz/Drużyna: {{ match.player_team_2 }}, Punkty: {{ match.score_2 }} </p>
+                                {% else %}
+                                    <p> Gracz/Drużyna: {{ match.player_team_1 }}, Punkty: -</p>
+                                    <p> Gracz/Drużyna: {{ match.player_team_2 }}, Punkty: -</p>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+
+    </div>
+
     <div class="add_buttons">
         <div class="mess" >{{ message }}</div>
         {% if tournament.num_of_players > players|length and tournament.tournament_status == "waiting" and user.is_authenticated %}
