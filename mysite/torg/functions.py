@@ -27,11 +27,11 @@ def prep_json(players):
 
 def the_winner_is(match, match_detail):
     if match.score_1 != None and match.score_2 != None:
-        print(match.score_1 >=0)
-        print(match.score_2 >= 0)
+        # print(match.score_1 >=0)
+        # print(match.score_2 >= 0)
         if (match.score_1 > match.score_2) and (match.score_1 >=0 or match.score_2 >=0):
-            print("Przechodziiii", match.player_team_1)
-            print("Zwycięzca", match.name)
+            # print("Przechodziiii", match.player_team_1)
+            # print("Zwycięzca", match.name)
             first_num = int(match.name[-3]) + 1
             if int(match.name[-1]) % 2 == 0:
                 second_num = int(match.name[-1]) // 2
@@ -50,8 +50,6 @@ def the_winner_is(match, match_detail):
                             next_match.save(update_fields=['player_team_2'])
 
         elif (match.score_1 < match.score_2) and (match.score_1 >=0 and match.score_2 >=0):
-            print("Przechodzi", match.player_team_2)
-            print("Zwycięzca", match.name)
             first_num = int(match.name[-3]) + 1
             if int(match.name[-1]) % 2 == 0:
                 second_num = int(match.name[-1]) // 2
@@ -90,7 +88,6 @@ def rename_match_name(match, match_detail):
             return phase
     elif len(str(match)) == 10:
         if int(str(match)[-4]) == phases - 4:
-            print("Cwicze joge", match)
             phase = '1/16 TURNIEJU - ' + str(match)[-2:]
             return phase
 

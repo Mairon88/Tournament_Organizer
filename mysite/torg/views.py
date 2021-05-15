@@ -362,6 +362,7 @@ def match_detail(request, match):
                 return render(request,
                               'account/match_detail.html',
                               {'match': match,
+                               'phase': match.phase,
                                'score_form': score_form,
                                'message': message,
                                'video_form': video_form,

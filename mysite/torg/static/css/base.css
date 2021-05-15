@@ -285,6 +285,8 @@ ul li{
     display: flex;
     flex-direction: row-reverse;
     justify-content: flex-end;
+    position: relative;
+
 }
 
 .add_player label {
@@ -527,35 +529,38 @@ a {
 
 /*==================DRZEWKO===================*/
 .tree {
+    font-size: 15px;
+    -webkit-text-size-adjust:none;
     display: flex;
-    align-items: strech;
+    align-content: center;
+    justify-content: center;
+    padding: 10px;
+    white-space: nowrap
 }
 
-.tree div {
-    padding: 5px;
-
-}
-
-.szesc div{
-    border: 1px solid;
-
-
-}
-
-.osma div{
-    border: 1px solid;
-    height: 172px;
-
+.tree div{
+overflow: auto;
+overflow-y: hidden;
+white-space: nowrap
 
 }
 
-.czwarta div{
 
+.osma, .czwarta, .polfinal, .final {
+    padding: 10px;
+    display: flex;
+    align-content: center;
+    justify-content: space-around;
+    flex-direction: column;
 
 }
-
-.polfinal div{
-    border: 1px solid;
+.szesc div, .osma div, .czwarta div, .polfinal div, .final div{
+    border: 3px solid;
+    height: 5em;
+    padding: 20px 5px 20px 5px;
+    border: 3px solid;
+    border-color: black;
+    margin: 10px 0 10px 0;
 
 }
 
