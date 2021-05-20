@@ -561,8 +561,12 @@ white-space: nowrap
     border: 3px solid;
     border-color: black;
     margin: 10px 0 10px 0;
+    background: black;
+    opacity: 0.5;
 
 }
 
-
+.phase {
+    text-align: center;
+}
 
