@@ -26,12 +26,12 @@
                 <a href="{% url 'login' %}"><img src="/media/img/login.png"  width="60%" height="60%"></a>
             {% endif %}
         </span>
-     <span class="dashboard"><a href="{% url 'dashboard' %}" ><img src="/media/img/home.png" width="60%" height="60%"></a></span>
-    <span class="profile"><a href="{% url 'edit' %}"><img src="/media/img/profile.png" width="60%" height="60%"></a></span>
+    {% if request.user.is_authenticated %}
+        <span class="dashboard"><a href="{% url 'dashboard' %}" ><img src="/media/img/home.png" width="60%" height="60%"></a></span>
+        <span class="profile"><a href="{% url 'edit' %}"><img src="/media/img/profile.png" width="60%" height="60%"></a></span>
+    {% endif %}
 
-    <span class="dashboard"><a href="{% url 'dashboard' %}" ><img src="/media/img/home.png" width="60%" height="60%"></a></span>
-    <span class="profile"><a href="{% url 'edit' %}"><img src="/media/img/profile.png" width="60%" height="60%"></a></span>
-    {% if request.path != '/account/' %}
+    {% if request.path != '/' and request.user.is_authenticated and request.path != '/edit/' and request.path != '/password_change/'%}
 
         <span class="small_create"><a href="{% url 'create_tournaments' %}" ><img src="/media/img/small_create.png" width="60%" height="60%"></a></span>
         <span class="small_pending"><a href="{% url 'waiting_tournaments' %}"><img src="/media/img/small_pending.png" width="60%" height="60%"></a></span>
@@ -46,7 +46,6 @@
 
 
 
-    <script src="http://127.0.0.1:8005/liverreload.js" charset="utf-8"></script>
 
 </body>
 </html>

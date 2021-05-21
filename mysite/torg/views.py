@@ -108,7 +108,7 @@ def create_tournaments(request):
                                           "message": message})
 
 
-            return redirect('/account/waiting_tournaments/')
+            return redirect('/waiting_tournaments/')
     else:
         tournament_form = TournamentRegistrationForm()
 
@@ -268,7 +268,7 @@ def tournament_delete(request, year, month, day, tournament, id):
 
     if request.method == 'POST' and request.POST.get('delete'):
         tournament.delete()
-        return redirect('/account/')
+        return redirect('/')
 
     return render(request,
                   'account/tournament_delete.html',
@@ -285,7 +285,7 @@ def tournament_complete(request, year, month, day, tournament, id):
     if request.method == 'POST' and request.POST.get('complete'):
         tournament.tournament_status = 'complete'
         tournament.save()
-        return redirect('/account/completed_tournaments/')
+        return redirect('/completed_tournaments/')
 
     return render(request,
                   'account/tournament_complete.html',
@@ -302,7 +302,7 @@ def tournament_start(request, year, month, day, tournament, id):
         tournament.tournament_status = 'ongoing'
         tournament.start_date = datetime.datetime.today()
         tournament.save()
-        return redirect('/account/ongoing_tournaments/')
+        return redirect('/ongoing_tournaments/')
 
     return render(request,
                   'account/tournament_start.html',
@@ -314,20 +314,14 @@ def match_detail(request, match):
     match = get_object_or_404(Match, slug=match)
 
 
-    if request.method == 'POST' and request.POST.get('video'):
-        video_form = YTForm(request.POST, request.FILES, instance=match)
-
-        if video_form.is_valid():
-            new_video = video_form.save(commit=False)
-            new_video.save()
-            return HttpResponseRedirect(request.path_info)
-
     if request.method == 'POST' and request.POST.get('desc'):
         desc_form = DescriptionForm(request.POST, request.FILES, instance=match)
-
-        if desc_form.is_valid():
+        video_form = YTForm(request.POST, request.FILES, instance=match)
+        if desc_form.is_valid() and video_form.is_valid():
             new_desc = desc_form.save(commit=False)
             new_desc.save()
+            new_video = video_form.save(commit=False)
+            new_video.save()
             return HttpResponseRedirect(request.path_info)
 
     video_form = YTForm(instance=match)

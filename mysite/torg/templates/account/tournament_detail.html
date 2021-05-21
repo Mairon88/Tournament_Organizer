@@ -8,7 +8,7 @@
         <h1 class="title"> {{ tournament.name }} </h1>
         <h2>Oragnizator turnieju: {{ tournament.author }}</h2>
         {% if tournament.tournament_status == "complete" %}
-            <h2>ZWYCIĘZCĄ TURNIEJU JEST: {{ winner }}</h2>
+            <span class="winner"><h2>ZWYCIĘZCĄ TURNIEJU JEST: {{ winner }}</h2></span>
         {% endif %}
         {% if tournament.tournament_status == "ongoing" %}
             <p> Data rozpoczęcia turnieju: {{ tournament.start_date }}</p>
@@ -21,16 +21,18 @@
                             <p> {% elif tournament.tournament_status == "complete" %} Zakończony</p>
                             <p> {% else %} Trwa </p>
                             {% endif %}
-        <p> Liczba graczy: {{ players|length }} / {{ tournament.num_of_players }}</p>
+        <p> Liczba graczy: {{ tournament.num_of_players }}</p>
 
         <p class="desc"> Opis turnieju: {{ tournament.description|linebreaks }}</p>
-        <div class="players">
-            {% if not players %}
-                <p> Gracze / Drużyny: Brak</p>
-            {% else %}
-               <p> Gracze / Drużyny: </p>
-            {% endif %}
-        </div>
+        {% if user.is_authenticated %}
+            <div class="players">
+                {% if not players %}
+                    <p> Gracze / Drużyny: Brak</p>
+                {% else %}
+                   <p> Gracze / Drużyny: </p>
+                {% endif %}
+            </div>
+        {% endif %}
     </div>
 
     <div class="cointainer_player">

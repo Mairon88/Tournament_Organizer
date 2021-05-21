@@ -111,5 +111,5 @@ class DescriptionForm(forms.ModelForm):
         model = Match
         fields = ('description',)
 
-        labels = {'description': '',
+        labels = {'description': 'Relacja z meczu',
                   }

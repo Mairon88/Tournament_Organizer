@@ -38,7 +38,7 @@
 
     {% if match.description %}
 
-    <p class="desc">REALCJA Z MECZU</p>
+
         {% if not user.is_authenticated %}
             <div class="desc_2">
                 <p >{{ match.description|linebreaks }}</p>
@@ -47,13 +47,16 @@
 
     {% endif %}
 
+    {% if match.score_1 != match.score_2 and match.score_1 >= 0 and match.score_2 >= 0 %}
+        {% if user.is_authenticated %}
+           <form class="forms" action="." method="POST">
+                {{ desc_form.as_p }}
+                {{ video_form.as_p }}
+                {% csrf_token %}
+                <p class="input_relation"><input type="submit" name="desc" value=" ">
+           </form>
+        {% endif %}
 
-    {% if user.is_authenticated %}
-       <form class="forms" action="." method="POST">
-            {{ desc_form.as_p }}
-            {% csrf_token %}
-            <p class="input_relation"><input type="submit" name="desc" value=" ">
-       </form>
     {% endif %}
     {% if match.youtube %}
        <p class="desc">FILM Z MECZU</p>
@@ -66,14 +69,8 @@
             webkitallowfullscreen="webkitallowfullscreen"></iframe>
        </div>
     {% endif %}
-    {% if user.is_authenticated %}
-       <form class="forms" action="." method="POST">
-            {{ video_form.as_p }}
-            {% csrf_token %}
-            <p class="input_load" ><input type="submit" name="video" value=" ">
-       </form>
-    {% endif %}
         <p><a href="{{ match.tournament.get_absolute_url }}"><input class="save" type="image" name="submit" src="/media/img/back.png"  alt="Submit"/></a></p>
+
 
 
 

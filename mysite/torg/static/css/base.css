@@ -242,6 +242,7 @@ ul li{
     justify-content: center;
     flex-flow: row-wrap;
     margin: auto auto;
+
 }
 
 .player {
@@ -350,6 +351,8 @@ h1{
 
 .cup_info {
     text-align: center;
+    font-size: 26px;
+    line-height: 1.1;
 }
 
 .input_submit input[type=submit] {
@@ -535,14 +538,13 @@ a {
     align-content: center;
     justify-content: center;
     padding: 10px;
-    white-space: nowrap
+    white-space: nowrap;
 }
 
 .tree div{
-overflow: auto;
-overflow-y: hidden;
-white-space: nowrap
-
+    overflow: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
 }
 
 
@@ -563,10 +565,16 @@ white-space: nowrap
     margin: 10px 0 10px 0;
     background: black;
     opacity: 0.5;
+    text-align: center;
+
 
 }
 
 .phase {
     text-align: center;
+    font-size: 18px;
 }
 
+.winner {
+    color: #d41737;
+}
