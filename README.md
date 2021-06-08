@@ -1,6 +1,5 @@
 #  Tournament Organizer
 http://tournamentsorganizer.pythonanywhere.com
-## Mariusz Rogawski
 
 ---
 
