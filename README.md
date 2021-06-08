@@ -88,7 +88,7 @@ view it. Participants without logging in cannot edit the tournament or add new t
 
 ![](github_img/tree.png )
 <p align="left">
-    pic.5 View of the generated tournament tree
+    pic.6 View of the generated tournament tree
 </p>
 
 ### "Completed tournaments" tab
