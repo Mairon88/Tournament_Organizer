@@ -3,9 +3,6 @@ from django.contrib.auth.models import User
 from .models import Profile, Tournament, PlayerTeam, Match
 
 
-class LoginForm(forms.Form):
-    username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput)
 
 
 class UserRegistrationForm(forms.ModelForm):
