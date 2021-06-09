@@ -1,5 +1,5 @@
 #  Tournament Organizer
-## Mariusz Rogawski
+http://tournamentsorganizer.pythonanywhere.com
 
 ---
 
@@ -24,7 +24,7 @@ to install all the necessary libraries for the script to run properly.
 - HTML 5
 - CSS 3
 ---
-###Description of the application with examples
+### Description of the application with examples
 After registering and logging in to the website, you can see the main screen with the four most important tabs:
 - create a tournament,
 - tournaments not started, 
@@ -36,7 +36,7 @@ After registering and logging in to the website, you can see the main screen wit
     pic.1 Main tabs
 </p>
 
-###"Create tournament" tab
+### "Create tournament" tab
 In the "create a tournament" subpage (pic. 2), provide basic information about the tournament:
 - tournament name
 - the number of players
@@ -48,7 +48,7 @@ After entering the data, save the tournament, and it will automatically go to th
     pic.2 Create new tournament
 </p>
 
-###"Pending tournaments" tab
+### "Pending tournaments" tab
 In the "pending tournaments" subpage there is a list of all saved tournaments (pic. 3) that are waiting for the entry of 
 participants and for its start. Therefore, select the tournament and enter the names of the players or teams, and then 
 start the tournament (pic. 4, 5). At this stage, it is also possible to edit the tournament in order to change the name 
@@ -70,7 +70,7 @@ After the tournament starts, it is automatically moved to the "tournaments in pr
     pic.5 Entered player names
 </p>
 
-###"Tournaments in progress" tab
+### "Tournaments in progress" tab
 There is a list of all started tournaments in the "ongoing tournaments" subpage. After selecting a specific tournament, 
 the organizer is moved to the tournament view, which shows basic information about the tournament and the generated 
 tournament tree (pic. 6), for which pairs of players or teams were drawn.
@@ -88,14 +88,14 @@ view it. Participants without logging in cannot edit the tournament or add new t
 
 ![](github_img/tree.png )
 <p align="left">
-    pic.5 View of the generated tournament tree
+    pic.6 View of the generated tournament tree
 </p>
 
-###"Completed tournaments" tab
+### "Completed tournaments" tab
 In the "tournaments completed" tab, there is a list of the tournaments in which the finals were held. This tab is the 
 history of the tournaments held, where you can view the details of the tournaments and matches.
 
 
-###Implementation
+### Implementation
 The developed application was implemented under the name Tournaments Organizer on the PythonAnywhere hosting platform, 
 so you can test the application at http://tournamentsorganizer.pythonanywhere.com
