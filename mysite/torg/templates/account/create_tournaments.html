@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load widget_tweaks %}
+
 
 {% block title %}Stwórz turniej{% endblock %}
 
@@ -10,7 +10,7 @@
     </div>
     <form class="forms" action="." method="post">
         {{ tournament_form.as_p }}
-<!--        {% render_field tournament_form.name class="input" %}-->
+
         {% csrf_token %}
         <input class="save" type="image" name="submit" src="/media/img/save.png"  alt="Submit"/>
         {{ message }}
