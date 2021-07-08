@@ -1,4 +1,6 @@
 #  Tournament Organizer
+
+Website adapted to the computer version, not the mobile version. Mobile version will comming soon.
 http://tournamentsorganizer.pythonanywhere.com
 
 ---
