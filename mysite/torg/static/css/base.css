@@ -582,3 +582,30 @@ a {
 .center_3 {
     text-align: center;
 }
+
+
+    .too_big {
+        display:block;
+    }
+
+.max_width_info {
+            display: none;
+            }
+
+@media (max-width:999px) {
+    .too_big {
+        display: none;
+    }
+
+    .max_width_info {
+            display: block;
+            margin: auto auto;
+            text-align: center;
+            margin-top:10%;
+        }
+
+     .max_width_info{
+        font-size: 4vw;
+        line-height: 150%;
+    }
+}

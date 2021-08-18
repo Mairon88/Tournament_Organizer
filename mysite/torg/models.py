@@ -23,7 +23,7 @@ class Profile(models.Model):
     description = models.TextField()
 
     def __str__(self):
-        return 'Profil użytkownika {}'.format(self.user.username)
+        return self.user.username
 
 class Tournament(models.Model):
     STATUS_CHOICES = (

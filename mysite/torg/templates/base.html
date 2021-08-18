@@ -14,6 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
 </head>
 <body>
+    <span class="too_big">
     <div class="header">
         <div class="logo"><img src="/media/img/logo.png"></div>
 
@@ -42,11 +43,15 @@
 
     <div id="content">
         {% block content %}
+
         {% endblock %}
+
     </div>
+    </span>
 
-
-
+    <h1 class="max_width_info">Przepraszam, ale aktualnie aplikacja jest dostosowana wyłącznie do urządzeń o szerokości od 1000px.<br>
+        Najlepiej używać aplikacji na komputerze lub tablecie.
+    Wersja na mniejsze ekrany pojawi się wkrótce.<br><br> Pozdrawiam</h1>
 
 </body>
 </html>
