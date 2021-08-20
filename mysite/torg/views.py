@@ -292,7 +292,9 @@ def tournament_start(request, year, month, day, tournament, id):
 
 def match_detail(request, match):
     match = get_object_or_404(Match, slug=match)
-
+    tournaments = Tournament.objects.filter(author=request.user)
+    print(tournaments)
+    print(match.tournament)
 
     if request.method == 'POST' and request.POST.get('desc'):
         desc_form = DescriptionForm(request.POST, request.FILES, instance=match)
@@ -328,8 +330,10 @@ def match_detail(request, match):
                     return render(request,
                                   'account/match_detail.html',
                                   {'match': match,
+                                   'phase': match.phase,
                                    'score_form': score_form,
-                                   'message': message})
+                                   'message': message,
+                                   'tournaments':tournaments})
 
             except:
                 message = "Nie podano wyników dla obu drużyn lub wynik jest mniejszy od 0"
@@ -340,7 +344,8 @@ def match_detail(request, match):
                                'score_form': score_form,
                                'message': message,
                                'video_form': video_form,
-                                'desc_form': desc_form})
+                                'desc_form': desc_form,
+                               'tournaments':tournaments})
 
 
 
@@ -367,5 +372,6 @@ def match_detail(request, match):
                    'score_form': score_form,
                    'phase': match.phase,
                    'video_form': video_form,
-                   'desc_form': desc_form})
+                   'desc_form': desc_form,
+                   'tournaments':tournaments})
 

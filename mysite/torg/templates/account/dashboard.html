@@ -4,7 +4,7 @@
 
 {% block content %}
         {% if request.user.is_authenticated %}
-
+            <p class="main_info">Stwórz turniej drzewkowy, udostępnij go uczestnikom podając do niego link, poprowadź turniej jako organizator :)</p>
             <div class="menu">
                     <div><a href="{% url 'create_tournaments' %}"><img src="/media/img/create.png" width="60%" height="60%"></a></div>
                     <div><p class="pen_tour">{{ pen_tour }}</p><a href="{% url 'waiting_tournaments' %}"><img src="/media/img/pending.png" width="60%" height="60%"></a></div>

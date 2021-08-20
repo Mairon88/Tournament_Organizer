@@ -5,6 +5,7 @@
 {% block content %}
 
     <h1> {{ phase }} </h1>
+
     <div class="pairs">
         <div class="ply_1"> {{ match.player_team_1 }} </div>
         <div class="sep">-</div>
@@ -27,11 +28,12 @@
         <p></p>
     {% else %}
         {% if user.is_authenticated %}
+        <span class="mess">{{ message }}</span>
             <form class="forms" action="." method="POST">
                 {{ score_form.as_p }}
                 {% csrf_token %}
                 <p class="input_save"><input type="submit" name="save" value=" ">
-                    <span class="mess">{{ message }}</span>
+
             </form>
         {% endif %}
     {% endif %}
@@ -70,7 +72,11 @@
        </div>
     {% endif %}
 
-
+    {% for tournament in tournaments %}
+        {% if tournament.name == match.tournament.name %}
+            <p class="add_player"><a href="{{ tournament.get_absolute_url }}"><input class="back" type="image" src="/media/img/back.png"></a></p>
+        {% endif %}
+    {% endfor %}
 
 
 {% endblock %}

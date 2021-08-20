@@ -592,6 +592,13 @@ a {
             display: none;
             }
 
+
+.main_info {
+    text-align: center;
+    font-size: 120%;
+}
+
+
 @media (max-width:999px) {
     .too_big {
         display: none;
