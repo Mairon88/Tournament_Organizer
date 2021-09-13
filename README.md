@@ -100,4 +100,4 @@ history of the tournaments held, where you can view the details of the tournamen
 
 ### Implementation
 The developed application was implemented under the name Tournaments Organizer on the PythonAnywhere hosting platform, 
-so you can test the application at http://tournamentsorganizer.pythonanywhere.com
+so you can test the application at http://torgturnieje.pythonanywhere.com /
